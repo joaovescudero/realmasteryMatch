@@ -19,8 +19,11 @@ Fight against your friends and whoever you want. With algoritims and a lot of da
 We created RealMastery: a Player Effiency Rating for LoL based on the last 5 ranked games of a summoner with a specific champion.
 This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a **Weighted average**:
 
-`(((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )/
-(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))) * (1 - (1/nMatches)) * 100`
+```javascript
+(((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )
+/
+(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))) * (1 - (1/nMatches)) * 100
+```
 
 **Important: all of the vars below is acummulated and divided by the number of matches played with the champion (max: 5)**
 - CreepEarly: Creeps per minute (0 to 10 minutes) ~ Weight: 5
@@ -67,7 +70,6 @@ Each role have its main characteristics. Comparing different players in differen
 ###API Processor
 - PHP
 
-####Why PHP?
 We decided to use PHP because it's more simpler to install in machines and to contribute, a very complete language and have a lot of support in web servers.
 
 ####Config:
@@ -92,7 +94,7 @@ http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champi
  - **champId**: the champion id (or champKey)
  - **champKey**: the champion name (or champId)
 
-
+=============
 ###Web Application
 ####Languages:
  - Javascript
