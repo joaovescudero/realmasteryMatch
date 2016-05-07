@@ -67,29 +67,31 @@ Each role have its main characteristics. Comparing different players in differen
 ###API Processor
 - PHP
 
-Why PHP?
+####Why PHP?
+We decided to use PHP because it's more simpler to install in machines and to contribute, a very complete language and have a lot of support in web servers.
 
 ####Config:
- - **APIKEY**: Describe config
- - **NBRMATCHES**: Describe config
+ - **APIKEY**: Your RIOT API Key
+ - **NBRMATCHES**: Number of matches you want to analyze
 
-####Classes:
-- **playerUsename**: Describe class
-- **playerLeague**: Describe class
-- **leagueCoefficient**: Describe class
-- **playerMastery**: Describe class
-- **playerMatches**: Describe class
-- **getMatch****: Describe class
+####Functions:
+- **getChampionId**: Gets champion id by champion name (champKey) (Optional)
+- **playerUsename**: Get the summoner id by username
+- **playerLeague**: Get the summoner league by user id(Just leagues, not division)
+- **leagueCoefficient**: Transform league name in league coefficient
+- **playerMastery**: Get summoner champion mastery with a championId
+- **playerMatches**: Get summoner's ranked matches id
+- **getMatch**: Get information from a specific match by match id
 
-URL Request:
-*Example: http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412*
+####URL Request Example:
+http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412
+*Response in JSON*
 
- - **region**: the user region in lower case
+ - **region**: the user region
  - **username**: the user username (can contain spaces)
- - **champId**: the champion id
- - **champKey**: the champion name
+ - **champId**: the champion id (or champKey)
+ - **champKey**: the champion name (or champId)
 
-The response is a JSON
 
 ###Web Application
 ####Languages:
@@ -105,10 +107,10 @@ The response is a JSON
   - Facebook SDK
   - Titillium Web font from Google Fonts
 
-URL Match Request:
-*Example: http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54 *
+####URL Match Request Example:
+http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54
 
-Hash data:
- - First: region player 1
- - Second: username player 1
- - Third: championId player 1
+Hash data order:
+ 1. Player Region
+ 2. Player Username
+ 3. Player Champion Id
