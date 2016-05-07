@@ -69,14 +69,14 @@ Classes:
 - **getMatch****: Describe class
 
 URL Request:
-http://joaovescudero.me:8080/riot/api/?region=br&username=mateusfzo&champid=67
+*Example: http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412 *
 
  - **region**: the user region in lower case
  - **username**: the user username (can contain spaces)
  - **champId**: the champion id
  - **champKey**: the champion name
 
-Response in JSON
+The response is a JSON
 
 ###Web Application
 - Languages:
@@ -90,4 +90,12 @@ Response in JSON
 - Packages:
   - jQuery
   - Facebook SDK
-  - Titillium WEb font from Google Fonts
+  - Titillium Web font from Google Fonts
+
+URL Match Request:
+*Example: http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54 *
+
+Hash data:
+ - First: region player 1
+ - Second: username player 1
+ - Third: championId player 1
