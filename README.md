@@ -19,8 +19,8 @@ Fight against your friends and whoever you want. With algoritims and a lot of da
 We created RealMastery: a Player Effiency Rating for LoL based on the last 5 ranked games of a summoner with a specific champion.
 This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a **Weighted average**:
 
-`(((CreepEarly * 5) + (CreepMid * 3) + + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * LC) + (MasteryLevel * 5) )/
-(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))} * (1 - (1/nMatches)) * 100`
+`(((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )/
+(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))) * (1 - (1/nMatches)) * 100`
 
 **Important: all of the vars below is acummulated and divided by the number of matches played with the champion (max: 5)**
 - CreepEarly: Creeps per minute (0 to 10 minutes) ~ Weight: 5
@@ -54,10 +54,14 @@ This project uses the RIOT API to get the data from these matches and calculate 
   - For supports, WardsPlaced has a RC of 5;
   - Default RC value is 3
 
-###Why weighted average, league and special coefficients?
-Weighted average is used in a lot of cases and can do pretty good calculating player efficiency rating. Since we (developers) are players of League of Legends, we weighted all the data from a match, but it wasn't fair.
-Supports don't have a high Creep, mid laners and adcarries should have priorities on Total Damage Dealt, top laners should receive benefits from tanking and junglers from neutral creeps, so, we decided to create special coefficients to supply this differences betweeen roles.
-League coefficients supports the idea that a KDA Ratio of 5 in a Challenge League is much more difficult than in a Bronze League.
+####Creeps weight
+Creeps weight are based on the importance and difficulty of the gold in its time, assuming that in the first 10 minutes of game the gold can do more advantage than later, thus, skills are less powerfull, causing farm to be harder.
+
+####League coefficient weight
+Datas are different from league to league, in high elos is more difficult to get high numbers than lowers elos. We did League Coefficients to solve this problem by fixed values that are applied just in some stats: nMatchesWon, KDA ratio, all multikills, maxKillingSpree, and the damage ones, so creeps and other stats dont differ. This can do great difference on the final result and it's more fair. 
+
+####Role coefficient weight
+Each role have its main characteristics. Comparing different players in different roles and with different champions is something very hard and cause a lot of discussions. Since the RIOT API provides datas about which role the summoner played in a specific game, we use this data to balance all those differences: wardsPlaced is valuable for support, so does totalDamageDealt for mid laners, top laners and adcarries, also neutralCreeps for junglers (they dont have high creep stats).
 
 ##Technology Stack
 ###API Processor
