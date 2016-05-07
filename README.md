@@ -9,7 +9,7 @@ RealMastery Match
 * [Contact](#contact)
 * [License](#license)
 
-### Live Demo
+## Live Demo
 http://joaovescudero.me:8080/riot
 
 ## Overview
@@ -57,10 +57,10 @@ This project uses the RIOT API to get the data from these matches and calculate 
 ####Creeps weight
 Creeps weight are based on the importance and difficulty of the gold in its time, assuming that in the first 10 minutes of game the gold can do more advantage than later, thus, skills are less powerfull, causing farm to be harder.
 
-####League coefficient weight
+####League coefficient
 Datas are different from league to league, in high elos is more difficult to get high numbers than lowers elos. We did League Coefficients to solve this problem by fixed values that are applied just in some stats: nMatchesWon, KDA ratio, all multikills, maxKillingSpree, and the damage ones, so creeps and other stats dont differ. This can do great difference on the final result and it's more fair. 
 
-####Role coefficient weight
+####Role coefficient
 Each role have its main characteristics. Comparing different players in different roles and with different champions is something very hard and cause a lot of discussions. Since the RIOT API provides datas about which role the summoner played in a specific game, we use this data to balance all those differences: wardsPlaced is valuable for support, so does totalDamageDealt for mid laners, top laners and adcarries, also neutralCreeps for junglers (they dont have high creep stats).
 
 ##Technology Stack
@@ -69,11 +69,11 @@ Each role have its main characteristics. Comparing different players in differen
 
 Why PHP?
 
-Config:
+####Config:
  - **APIKEY**: Describe config
  - **NBRMATCHES**: Describe config
 
-Classes:
+####Classes:
 - **playerUsename**: Describe class
 - **playerLeague**: Describe class
 - **leagueCoefficient**: Describe class
@@ -82,7 +82,7 @@ Classes:
 - **getMatch****: Describe class
 
 URL Request:
-*Example: http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412 *
+*Example: http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412*
 
  - **region**: the user region in lower case
  - **username**: the user username (can contain spaces)
@@ -92,15 +92,15 @@ URL Request:
 The response is a JSON
 
 ###Web Application
-- Languages:
+####Languages:
  - Javascript
  - HTML5
  - CSS3
 
-- Hosting:
+####Hosting:
   - DigitalOcean
 
-- Packages:
+####Packages:
   - jQuery
   - Facebook SDK
   - Titillium Web font from Google Fonts
