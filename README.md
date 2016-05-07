@@ -16,7 +16,7 @@ RealMastery Match was created as an entry into Riot's Summer API Challenge. It a
 
 ## <a name="start"></a>Getting started
 
-### Setup the project
+#### Setup the project
 
 * Clone the project
 
@@ -24,7 +24,7 @@ RealMastery Match was created as an entry into Riot's Summer API Challenge. It a
 
 * Enter project folder
 
-        $ cd sharingdreams2
+        $ cd realmasteryMatch
         
 * Open index.html
 
