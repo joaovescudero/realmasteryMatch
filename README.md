@@ -17,7 +17,7 @@ Fight against your friends and whoever you want. With algoritims and a lot of da
 
 ## RealMastery Index
 We created RealMastery: a Player Effiency Rating for LoL based on the last 5 ranked games of a summoner with a specific champion.
-This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a **Weighted average**:
+This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a weighted average:
 
 ```javascript
 (((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )
@@ -69,24 +69,23 @@ Each role have its main characteristics. Comparing different players in differen
 ##Technology Stack
 ###API Processor
 - PHP
-
-We decided to use PHP because it's more simpler to install in machines and to contribute, a very complete language and have a lot of support in web servers.
+We decided to use PHP because of its simplicity to install, the server support and the facility to everyone contribute, besides its power.
 
 ####Config:
  - **APIKEY**: Your RIOT API Key
- - **NBRMATCHES**: Number of matches you want to analyze
+ - **NBRMATCHES**: Number of matches you want to analyze (Recommended: 5)
 
 ####Functions:
 - **getChampionId**: Gets champion id by champion name (champKey) (Optional)
-- **playerUsename**: Get the summoner id by username
-- **playerLeague**: Get the summoner league by user id(Just leagues, not division)
-- **leagueCoefficient**: Transform league name in league coefficient
-- **playerMastery**: Get summoner champion mastery with a championId
-- **playerMatches**: Get summoner's ranked matches id
-- **getMatch**: Get information from a specific match by match id
+- **playerUsename**: Gets the summoner id by username
+- **playerLeague**: Gets the summoner league by summoner id (just leagues, not division)
+- **leagueCoefficient**: Gets summoner's league coefficient
+- **playerMastery**: Gets summoner's champion mastery
+- **playerMatches**: Gets summoner's ranked matches id
+- **getMatch**: Gets data from a specific match by match id
 
 ####URL Request Example:
-http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412
+`http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412`
 *Response in JSON*
 
  - **region**: the user region
@@ -110,7 +109,7 @@ http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champi
   - Titillium Web font from Google Fonts
 
 ####URL Match Request Example:
-http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54
+`http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54`
 
 Hash data order:
  1. Player Region
