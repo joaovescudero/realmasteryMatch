@@ -10,7 +10,7 @@ Fight against your friends and whoever you want. With algoritims and a lot of da
 We created RealMastery: a Player Effiency Rating for LoL based on the last 5 ranked games of a summoner with a specific champion.
 This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a **Weighted average**:
 
-`(((CreepEarly * 5) + (CreepMid * 3) + + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * SC) * LC) + ((TotalDamageTaken * SC) * LC) + (WardsPlaced * SC) + (NeutralCreeps * LC) + (MasteryLevel * 5) )/
+`(((CreepEarly * 5) + (CreepMid * 3) + + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * LC) + (MasteryLevel * 5) )/
 (CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))} * (1 - (1/nMatches)) * 100`
 
 **Important: all of the vars below is acummulated and divided by the number of matches played with the champion (max: 5)**
@@ -38,12 +38,12 @@ This project uses the RIOT API to get the data from these matches and calculate 
   - Diamond: 1.5;
   - Master: 1.55;
   - Challenger: 1.6
-- SC: Special Coefficient.
-  - For mid laners and adcarries, TotalDamageDealt has a SC of 7;
-  - For top laners, TotalDamageDealt has a SC of 7 and a TotalDamageTaken of 9;
-  - For junglers, NeutralCreeps has a SC of 7;
-  - For supports, WardsPlaced has a SC of 5;
-  - Default SC value is 3
+- RC: Role Coefficient.
+  - For mid laners and adcarries, TotalDamageDealt has a RC of 7;
+  - For top laners, TotalDamageDealt has a RC of 7 and a TotalDamageTaken of 9;
+  - For junglers, NeutralCreeps has a RC of 7;
+  - For supports, WardsPlaced has a RC of 5;
+  - Default RC value is 3
 
 ###Why weighted average, league and special coefficients?
 Weighted average is used in a lot of cases and can do pretty good calculating player efficiency rating. Since we (developers) are players of League of Legends, we weighted all the data from a match, but it wasn't fair.
@@ -68,6 +68,16 @@ Classes:
 - **playerMatches**: Describe class
 - **getMatch****: Describe class
 
+URL Request:
+http://joaovescudero.me:8080/riot/api/?region=br&username=mateusfzo&champid=67
+
+ - **region**: the user region in lower case
+ - **username**: the user username (can contain spaces)
+ - **champId**: the champion id
+ - **champKey**: the champion name
+
+Response in JSON
+
 ###Web Application
 - Languages:
  - Javascript
@@ -80,3 +90,4 @@ Classes:
 - Packages:
   - jQuery
   - Facebook SDK
+  - Titillium WEb font from Google Fonts
