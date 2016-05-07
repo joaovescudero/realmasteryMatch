@@ -22,7 +22,8 @@ This project uses the RIOT API to get the data from these matches and calculate 
 ```javascript
 (((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )
 /
-(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel))) * (1 - (1/nMatches)) * 100
+(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel)))
+* (1 - (1/nMatches)) * 100
 ```
 
 **Important: all of the vars below is acummulated and divided by the number of matches played with the champion (max: 5)**
@@ -69,7 +70,10 @@ Each role have its main characteristics. Comparing different players in differen
 ##Technology Stack
 ###API Processor
 - PHP
+
 We decided to use PHP because of its simplicity to install, the server support and the facility to everyone contribute, besides its power.
+
+> "Written in PHP so literally anyone can contribute, even if they have no idea how to program. Even babies and dogs can contribute. You, too, can contribute!" - Phabricator.org
 
 ####Config:
  - **APIKEY**: Your RIOT API Key
@@ -115,3 +119,10 @@ Hash data order:
  1. Player Region
  2. Player Username
  3. Player Champion Id
+
+####Functions:
+- **round**: Round numbers in maximum 2 decimal values
+- **clearChampionSelect**: Remove the style of a champion selected and turns each one in black and white
+- **getUserLeague**: Transform the LC provided by API in words (*Example: 1.4 to Platinum*, it's used in the match results table)
+- **doMatch**: Hide a lot elements, do AJAX requests to API, prepare the match results table with rounded numbers and include Facebook Share
+- **resetMatch**: Hide a lot of elements and backs to the first step (Player 1 information)
