@@ -2,22 +2,36 @@ RealMastery Match
 ============
 [![GitHub Stars](https://img.shields.io/github/stars/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/issues) [![Current Version](https://img.shields.io/badge/version-0.1-green.svg)](https://github.com/joaovescudero/realmasteryMatch/) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](http://joaovescudero.me:8080/riot)
 
-* [Intro](#intro)
 * [Demo](#demo)
-* [Getting started](#start)
-* [F.A.Q](#faq)
-* [Contact](#contact)
-* [License](#license)
+* [Overview](#overview)
+* [Getting Started](#start)
+* [RealMastery Index](#rmindex)
+* [Technology Stack](#stack)
 
-## Live Demo
+##<a name="demo"></a> Demo
 http://joaovescudero.me:8080/riot
 
-## Overview
-Fight against your friends and whoever you want. With algoritims and a lot of data, we can calculate how well summoners have played in the last 5 rankeds with a specific champion.
+##<a name="overview"></a> Overview
+RealMastery Match was created as an entry into Riot's Summer API Challenge. It allows you fight against your friends and whoever you want. With algoritims and a lot of data, it can calculate how well summoners have played in the last 5 rankeds with a specific champion.
 
-## RealMastery Index
-We created RealMastery: a Player Effiency Rating for LoL based on the last 5 ranked games of a summoner with a specific champion.
-This project uses the RIOT API to get the data from these matches and calculate a Player Effiency Rating by a weighted average:
+## <a name="start"></a>Getting started
+
+### Setup the project
+
+* Clone the project
+
+        $ git clone https://github.com/joaovescudero/realmasteryMatch.git
+
+* Enter project folder
+
+        $ cd sharingdreams2
+        
+* Open index.html
+
+
+##<a name="rmindex"></a> RealMastery Index
+We created RealMastery: a Player Efficiency Rating for League of Legends based on the last 5 ranked games of a summoner with a specific champion.
+This project uses the RIOT API to get the data from these matches and calculate a Player Efficiency Rating by a weighted average:
 
 ```javascript
 (((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )
@@ -67,13 +81,15 @@ Datas are different from league to league, in high elos is more difficult to get
 ####Role coefficient
 Each role have its main characteristics. Comparing different players in different roles and with different champions is something very hard and cause a lot of discussions. Since the RIOT API provides datas about which role the summoner played in a specific game, we use this data to balance all those differences: wardsPlaced is valuable for support, so does totalDamageDealt for mid laners, top laners and adcarries, also neutralCreeps for junglers (they dont have high creep stats).
 
-##Technology Stack
+##<a name="stack"></a>Technology Stack
 ###API Processor
-- PHP
+* PHP
 
 We decided to use PHP because of its simplicity to install, the server support and the facility to everyone contribute, besides its power.
 
+
 > "Written in PHP so literally anyone can contribute, even if they have no idea how to program. Even babies and dogs can contribute. You, too, can contribute!" - Phabricator.org
+
 
 ####Config:
  - **APIKEY**: Your RIOT API Key
@@ -90,6 +106,7 @@ We decided to use PHP because of its simplicity to install, the server support a
 
 ####URL Request Example:
 `http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412`
+
 *Response in JSON*
 
  - **region**: the user region
@@ -119,6 +136,7 @@ Hash data order:
  1. Player Region
  2. Player Username
  3. Player Champion Id
+
 
 ####Functions:
 - **round**: Round numbers in maximum 2 decimal values
