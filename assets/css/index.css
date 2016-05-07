@@ -26,7 +26,7 @@ body {
 }
 
 section.box {
-	margin-top: 20%;
+	margin-top: 23%;
 	width: 100%;
 }
 
@@ -129,10 +129,12 @@ button {
 	.box, section.box {
 		width: calc(100% - 20px);
 		border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 	}
 
 	section.box {
-		margin-top: 45%;
+		margin-top: 115px;
 	}
 
   #champions_slider {
@@ -151,7 +153,7 @@ button {
 
 	section.box {
 		width: calc(100% - 20px);
-		margin-top: 23%;
+		margin-top: 25%;
 	}
 }
 
