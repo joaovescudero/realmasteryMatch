@@ -7,7 +7,7 @@ body {
 	color: #a062ba;
 	max-width: 50%;
 	margin: 0 auto;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: url('http://vignette3.wikia.nocookie.net/leagueoflegends/images/d/d3/Summoners_rift_platform.png/revision/20160216121608') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -52,13 +52,16 @@ input[type="text"], input[type="search"] {
 	font-size: 15px;
 	margin-top: 5px;
   margin-bottom: 7px;
+  font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: 170px;
 }
 
 input[type="search"] {
-    border: 2px solid #ccc;
-    border-radius: 0 0 10px 10px;
-    color: #484848;
-    font-size: 13px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 0 0 10px 10px;
+  color: #484848;
+  font-size: 13px;
 }
 
 
@@ -161,10 +164,6 @@ button {
     padding: 2px;
     padding-top: 5px;
     cursor: pointer;
-}
-
-.champion_select {
-    border: 2px solid transparent;
 }
 
 #content .left_side .content li {
