@@ -9,7 +9,7 @@ RealMastery Match
 * [Technology Stack](#stack)
 
 ##<a name="demo"></a> Demo
-http://joaovescudero.me:8080/riot
+https://joaovescudero.me/riot
 
 ##<a name="overview"></a> Overview
 This project uses the RIOT API to get data of a player's last 5 ranked matches with a specific champion and calculates the RealMastery Index, a Player Efficiency Rating created by us that gets compared to other's, allowing you to fight against your friends and other players.
@@ -109,7 +109,7 @@ We decided to use PHP because of its simplicity to install, the server support a
 - **getLeagueCoefficient**: Gets summoner's league coefficient
 
 ####URL Request Example:
-`http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412`
+`https://joaovescudero.me/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412`
 
 *Response in JSON*
 
@@ -135,7 +135,7 @@ We decided to use PHP because of its simplicity to install, the server support a
   - Titillium Web font from Google Fonts
 
 ####URL Match Request Example:
-`http://joaovescudero.me:8080/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54`
+`https://joaovescudero.me/riot/#br-HKZ%20BrushyMan-412!vs!br-HKZ%20soloT-54`
 
 Hash data order:
  1. Player Region
