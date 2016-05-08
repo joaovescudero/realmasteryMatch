@@ -1,6 +1,6 @@
 <?php
   //
-  header("Access-Control-Allow-Origin: http://localhost/");
+  header("Access-Control-Allow-Origin: http://localhost:8080/");
 
   //Including config file
   require_once("config/config.php");
