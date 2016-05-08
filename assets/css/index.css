@@ -182,7 +182,7 @@ button {
 }
 
 #champions_slider li {
-  max-height: 180px;
+  height: 180px;
   overflow: auto;
 }
 
