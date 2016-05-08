@@ -12,9 +12,9 @@ RealMastery Match
 http://joaovescudero.me:8080/riot
 
 ##<a name="overview"></a> Overview
-RealMastery Match was created as an entry into Riot's Summer API Challenge. It allows you fight against your friends and whoever you want. With algorithms and a lot of data, it can calculate how well summoners have played in the last 5 rankeds with a specific champion.
+This project uses the RIOT API to get data of a player's last 5 ranked matches with a specific champion and calculates the RealMastery Index, a Player Efficiency Rating created by us, and compares it with others. It allows you to fight against your friends and whoever you want with algorithms and a lot of data.
 
-## <a name="start"></a>Getting started
+## <a name="start"></a> Getting started
 
 #### Setup the project
 
