@@ -130,6 +130,7 @@ We decided to use PHP because of its simplicity to install, the server support a
 
 ####Packages:
   - jQuery
+  - Angular
   - Facebook SDK
   - Titillium Web font from Google Fonts
 
