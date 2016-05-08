@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	/* Initializing vars */
 	var match = {
 		region: [],
 		user: [],
@@ -7,19 +8,31 @@ $(document).ready(function(){
 		results: []
 	};
 	var step = 0;
-	var p0=[];
-	var p0points;
-	var p1points;
-	var p1=[];
-	var list=["KDA", "Gold", "WardsPlaced", "KillingSpree", "DoubleKill", "TripleKill", "QuadraKill", "PentaKill", "CreepEarly", "CreepMid", "CreepLate", "NeutralCreeps", "TotalDamageDealt", "TotalDamageTaken", "nMatchesWon", "MasteryLevel", "league"];
+	var p0 = [];
+	var p1 = [];
+	var stats = ["KDA", "Gold", "WardsPlaced", "KillingSpree", "DoubleKill", "TripleKill", "QuadraKill", "PentaKill", "CreepEarly", "CreepMid", "CreepLate", "NeutralCreeps", "TotalDamageDealt", "TotalDamageTaken", "nMatchesWon", "MasteryLevel", "league"];
+	
+	/* Hide things at start */
 	$('#results-table').hide();
 	$('#loading').hide();
 	$('#match-wrapper').hide();
 
+	/*
+		Round numbers in 2 decimal places
+		Used in: Match Results Table
+		Why: Facilitate the reading
+		@param Number value 	The number to round
+		@param Number decimals 	The number of decimals of the final number
+	*/
 	function round(value, decimals) {
     	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 	}
 
+	/*
+		Remove the style of a champion selected and turns each one in black and white
+		Used in: Champion Select
+		Why: Enhance the User Experience by notability of which champion the user is selecting
+	*/
 	function clearChampionSelect() {
 		$('.med_champion_sprite').each(function(){
 			$(this).removeClass('active');
@@ -27,6 +40,11 @@ $(document).ready(function(){
 		});
 	}
 
+	/*
+		Transform the LC provided by API in words (Example: 1.4 to Platinum)
+		Used in: Match Results Table
+		Why: Facilitate the reading
+	*/
 	function getUserLeague(league){
 		switch(league) {
 			case 1.0:
@@ -56,32 +74,49 @@ $(document).ready(function(){
     	}
 	}
 
+	/* Hide a lot elements, do AJAX requests to API, prepare the match results table with rounded numbers and include Facebook Share */
 	function doMatch(){
+		/* Hide things from previous steps */
 		$('#next').text('Back');
 		$('#summoner-name').val('').hide();
 		$('#select-region').hide();
 		$('#champions_slider').hide();
 		$('#introduction').hide();
+		$('#match-header').hide();
+
+		/* Start loading gif */
+		$('#loading').show(300);
+
+		/* Shows the match results wrapper and table */
 		$('#match-wrapper').show(200);
+		$('#results-table').show(400);
+
+		/* Search for the champion name by a champion id (used when the match comes from a direct link with hash) */
+		for(var i=0; i < 2; i++){ /* 2 players */
+			if(!match.championName[i]){
+				var championsData = championsObj.data;
+				for(champion in championsData){
+					if(championsData[champion].id == match.champion[i]){
+						match.championName[i] = championsData[champion].name;
+					}
+				}
+			}
+		}
+
+		/* Shows to the user informations of the match */
 		$('h3').text(
 			match.user[0] + ' [' + match.region[0].toUpperCase() + '] ' + match.championName[0] + ' vs ' +
 			match.user[1] + ' [' + match.region[1].toUpperCase() + '] ' + match.championName[1]
 		);
+
+		/* Sets the website hash so that users can share the match */
+		window.location.hash = match.region[0] + '-' + match.user[0].replace(' ', '') + '-' + match.champion[0] + '!vs!' + match.region[1] + '-' + match.user[1].replace(' ', '') + '-' + match.champion[1];
+
+		/* Add the facebook Share+Like button so that users can share/like the match */
 		$('#nav-p').html('<div class="fb-like" data-href="' + window.location.href + window.location.hash + '" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>');
+				
 
-		match.championName[0] = match.championName[0] || match.champion[0];
-		match.championName[1] = match.championName[1] || match.champion[1];
-		
-		$('#match-header').hide();
-
-		window.location.hash = match.region[0] + '-' + match.user[0] + '-' + match.champion[0] + '!vs!' + match.region[1] + '-' + match.user[1] + '-' + match.champion[1];
-
-		$('#loading').show(300);
-
-		console.log('http://joaovescudero.me:8080/riot/api/?region='+match.region[0]+'&username='+match.user[0]+'&champid='+match.champion[0]);
-		console.log('http://joaovescudero.me:8080/riot/api/?region='+match.region[1]+'&username='+match.user[1]+'&champid='+match.champion[1]);
-
-		for(var i=0; i<2; i++){
+		for(var i=0; i<2; i++){ /* 1 request for player */
 			$.ajax({
 			  type: 'GET',
 			  url: 'http://joaovescudero.me:8080/riot/api/?region='+match.region[i]+'&username='+match.user[i]+'&champid='+match.champion[i],
@@ -92,8 +127,10 @@ $(document).ready(function(){
 			  },
 
 			  success: function(data) {
-			  	console.log(data);
+			  	/* Parse the result JSON */
 			  	var json = JSON.parse(data);
+
+			  	/* Check which AJAX loaded first, and set the data to the right player */
 			  	if(match.user[0] == json.user) {
 			  		match.results[0] = json;
 			  	}
@@ -101,61 +138,60 @@ $(document).ready(function(){
 			  		match.results[1] = json;
 			  	}
 
-			  	p0points = match.results[0].points;
-			  	p1points = match.results[1].points;
-
-			  	$('#results-table').show(400);
-
-			  	if(match.results[0].user == match.user[0]){
-				  	$('.player-data.p0').each(function(){
-				  		var x = $(this).data('data');
-			  			$(this).text(round(match.results[0].stats[x], 2));
-				  		p0.push(round(match.results[0].stats[x], 2));
-				  	});
-			  	}
-			  	if(match.results[1].user == match.user[1]){
-				  	$('.player-data.p1').each(function(){
-				  		var x = $(this).data('data');
-			  			$(this).text(round(match.results[1].stats[x], 2));
-				  		p1.push(round(match.results[1].stats[x], 2));
+			  	/* Round stats of a summoner in 2 decimal places */
+			  	for(var i = 0; i < 2; i++){
+				  	$('.player-data.p'+i).each(function(){
+				  		var stat = $(this).data('data');
+			  			$(this).text(round(match.results[i].stats[stat], 2));
+				  		p0.push(round(match.results[i].stats[stat], 2));
 				  	});
 			  	}
 
+			  	/* Check if both players results is already loaded */
 			  	if(match.results[0] && match.results[1]){
-						$('#loading').hide(300);
+					
+					/* Hide the loading gif */
+					$('#loading').hide(300);
 
-			  		for(var i=0;i<list.length;i++){
+			  		/* Compare stats between players: won, lose or tie */
+			  		for(var i=0;i<stats.length;i++){
 			  			if(p0[i] > p1[i]){
-			  				$('.player-data.p0.'+list[i].toLowerCase()).addClass('won');
-			  				$('.player-data.p1.'+list[i].toLowerCase()).addClass('lose');
+			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('won');
+			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('lose');
 			  			}else if(p0[i] < p1[i]){
-			  				$('.player-data.p0.'+list[i].toLowerCase()).addClass('lose');
-			  				$('.player-data.p1.'+list[i].toLowerCase()).addClass('won');
+			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('lose');
+			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('won');
 			  			}else{
-			  				$('.player-data.p0.'+list[i].toLowerCase()).addClass('tie');
-			  				$('.player-data.p1.'+list[i].toLowerCase()).addClass('tie');
+			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('tie');
+			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('tie');
 			  			}
 			  		}
 
-			  		$('.player-data-points.p0').text(p0points + ' points');
-			  		$('.player-data-points.p1').text(p1points + ' points');
+			  		/* Shows points of both players and compare then: won, lose or tie */
+			  		for(var i = 0; i < 2; i++){
+			  			$('.player-data-points.p'+i).text(match.results[i].points + ' points');
+			  		}
 
-			  		$('.player-data.p0.league').text(getUserLeague(p0[16]));
-			  		$('.player-data.p1.league').text(getUserLeague(p1[16]));
-
-			  		$('.player-data.p0.nmatcheswon').text(p0[14]*10+'%');
-			  		$('.player-data.p1.nmatcheswon').text(p1[14]*10+'%');
-
-			  		if(p0points > p1points){
+			  		if(match.results[0].points > match.results[1].points){
 		  				$('.player-data-points.p0').addClass('won');
 		  				$('.player-data-points.p1').addClass('lose');
-		  			} else if(p0points < p1points){
+		  			} else if(match.results[0].points < match.results[1].points){
 		  				$('.player-data-points.p0').addClass('lose');
 		  				$('.player-data-points.p1').addClass('won');
-		  			} else{
+		  			} else {
 		  				$('.player-data-points.p0').addClass('tie');
 		  				$('.player-data-points.p1').addClass('tie');
 		  			}
+
+
+		  			/* Transform LC in readable league name using getUserLeague */
+			  		$('.player-data.p0.league').text(getUserLeague(p0[16]));
+			  		$('.player-data.p1.league').text(getUserLeague(p1[16]));
+
+			  		/* Transform the win rate in percentage */
+			  		$('.player-data.p0.nmatcheswon').text(p0[14]*10+'%');
+			  		$('.player-data.p1.nmatcheswon').text(p1[14]*10+'%');
+
 			  	}
 			  },
 
@@ -166,7 +202,9 @@ $(document).ready(function(){
 		}
 	}
 
+	/* Hide a lot of elements and backs to the first step (Player 1 information) */
 	function resetMatch(){
+		/* Reset the step and all match data */
 		step = 0;
 		match = {
 			region: [],
@@ -177,18 +215,22 @@ $(document).ready(function(){
 		};
 		p0 = [];
 		p1 = [];
-		p0points = [];
-		p1points = [];
 
+		/* Reset match results */
 		$('.player-data').each(function(){
 			$(this).text('');
 		});
+		$('#results').text('');
 
+		/* Reset the hash */
 		window.location.hash = '';
+
+		/* Hide the load and the result-table */
 		$('#results-table').hide();
 		$('#loading').hide();
+
+		/* Backs to the step 1 */
 		$('#match-header').show();
-		$('#results').text('');
 		$('#next').text('Next');
 		$('#summoner-name').show();
 		$('#select-region').show();
@@ -197,31 +239,13 @@ $(document).ready(function(){
 		$('#nav-p').text('Select the summoner and the champion');
 	}
 
-  	$("#search-champion").keyup(function(){
-		var texto = $(this).val().toLowerCase();
-		$(".champion_select").each(function(){
-			if(texto == ''){
-				$(this).show();
-				$(this).parent().show();
-			} else if($(this).attr('alt').toLowerCase().indexOf(texto) < 0){
-			  $(this).hide();
-				$(this).parent().hide();
-			} else {
-				$(this).show();
-				$(this).parent().show();
-			}
-		});
-	});
-
-	$('.med_champion_sprite').click(function(){
-		clearChampionSelect();
-		$(this).addClass('active');
-		match.champion[step] = $(this).attr('id');
-		match.championName[step] = $(this).attr('alt');
-	});
-
+	/* Check if the user is coming from a direct link with hash */ 
 	if(window.location.hash && window.location.hash != '#'){
+
+		/* Splits the hash, remove spaces, # and !vs! */
 		var splits = window.location.hash.replace(' ', '').replace('%20', '').replace('#', '').replace('!vs!', '-').split('-');
+
+		/* Set match info by splitted the hash */
 		match.region[0] = splits[0];
 		match.user[0] = splits[1];
 		match.champion[0] = splits[2];
@@ -229,20 +253,58 @@ $(document).ready(function(){
 		match.user[1] = splits[4];
 		match.champion[1] = splits[5];
 
+		/* Check if the URL is formatted correctly */
 		if(match.user.length > 0 && match.champion.length > 0 && match.region.length > 0){
 			doMatch();
 			step = 3;
 		} else {
-			resetMatch();
+			resetMatch(); /* Takes user back to step 1 */
 		}
 	}
 
+	/* Champion search */
+  	$("#search-champion").keyup(function(){
+		var texto = $(this).val().toLowerCase();
+		$(".champion_select").each(function(){
+			if(texto == ''){ /* Check if the search input is empty and shows all champions*/
+				$(this).show();
+				$(this).parent().show();
+			} else if($(this).attr('alt').toLowerCase().indexOf(texto) < 0){ /* Champion does not match the search, so hide it */
+			 	$(this).hide();
+				$(this).parent().hide();
+			} else { /* Champion do match the search, so show it */
+				$(this).show();
+				$(this).parent().show();
+			}
+		});
+	});
+
+  	/* 'Select' visually the champion by adding a border and coloring */
+	$("body").delegate(".med_champion_sprite", "click", function(){
+		clearChampionSelect(); /* Reset the last selected champion and turn each one on black and white */
+		$(this).addClass('active');
+
+		/* Setting new informations of the player */
+		match.champion[step] = $(this).attr('id');
+		match.championName[step] = $(this).attr('alt');
+	});
+
+	/* When a user clicks on 'Start a match', take him/her to the step 1 */
+	$('#start').click(function(){
+		$('h3').text('Player 1');
+		$('#nav-p').text('Select the summoner and the champion');
+		$('#introduction').hide(200);
+		$('#match-wrapper').delay(200).show(200);
+	});
+
+	/* When a user proceeds a step */
 	$('#next').click(function(){
-		if(step <= 1){
+		if(step <= 1){ /* Check if its step 1 or 2 */
 			match.region[step] = $('#select-region option:selected').text().toLowerCase();
 			match.user[step] = $('#summoner-name').val();
 
-			if(match.user[step].length > 0 && match.champion[step]){
+			if(match.user[step].length > 0 && match.champion[step]){ /* Check if all the fields are filled - Region is checked by default */
+				/* Reset data from previous steps */
 				step++;
 				clearChampionSelect();
 				$('#summoner-name').val('').focus();
@@ -255,18 +317,12 @@ $(document).ready(function(){
 			}
 		}
 
-		if(step == 2){
+		if(step == 2){ /* Check if its step 2 and do the match, proceeding to step 3 */
 			doMatch();
 			step++;
-		} else if(step == 3) {
+		} else if(step == 3) { /* The 'Back' button, backs to step 1 */
 			resetMatch();
 		}
 	});
 
-	$('#start').click(function(){
-		$('h3').text('Player 1');
-		$('#nav-p').text('Select the summoner and the champion');
-		$('#introduction').hide(200);
-		$('#match-wrapper').delay(200).show(200);
-	});
 });

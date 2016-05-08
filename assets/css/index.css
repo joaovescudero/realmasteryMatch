@@ -3,36 +3,37 @@
 }
 
 body {
-	background: #a062ba;
-	color: #a062ba;
-	max-width: 50%;
-	margin: 0 auto;
-	font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: url('http://vignette3.wikia.nocookie.net/leagueoflegends/images/d/d3/Summoners_rift_platform.png/revision/20160216121608') no-repeat center center fixed; 
-  -webkit-background-size: cover;
+  background: #a062ba;
+  color: #a062ba;
+  font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 50%;
   -moz-background-size: cover;
   -o-background-size: cover;
+  -webkit-background-size: cover;
   background-size: cover;
+  background: url('http://vignette3.wikia.nocookie.net/leagueoflegends/images/d/d3/Summoners_rift_platform.png/revision/20160216121608') no-repeat center center fixed; 
 }
 
 .box {
-	border-radius: 5px;
-	background: #fff;
-	text-align: center;
-	padding: 10px;
-	width: 50%;
+  background: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  width: 50%;
   -webkit-box-shadow: 3px 3px 50px 4px rgba(0,0,0,0.6);
   box-shadow: 3px 3px 50px 4px rgba(0,0,0,0.6);
 }
 
 section.box {
-	margin-top: 23%;
-	width: 100%;
+  margin-top: 23%;
+  width: 100%;
+  margin-bottom: 10%;
 }
 
 nav {
-	top: -10px;
-	position: absolute;
+  position: absolute;
+  top: -10px;
 }
 
 form {
@@ -40,40 +41,40 @@ form {
 }
 
 p {
-  width: 80%;
   margin: 1em auto 1em auto;
+  width: 80%;
 }
 
 input[type="text"], input[type="search"] {
-	border: 2px solid #8633cc;
-	border-radius: 50px;
-	color: #a062ba;
-	padding: 8px;
-	font-size: 15px;
-	margin-top: 5px;
-  margin-bottom: 7px;
+  border-radius: 50px;
+  border: 2px solid #8633cc;
+  color: #a062ba;
+  font-size: 15px;
+  margin-top: 5px;
+  padding: 8px;
   font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin-bottom: 7px;
   width: 170px;
 }
 
 input[type="search"] {
-  text-align: center;
-  border: 2px solid #ccc;
   border-radius: 0 0 10px 10px;
+  border: 2px solid #ccc;
   color: #484848;
   font-size: 13px;
+  text-align: center;
 }
 
 
 button {
-	font-size: 15px;
-	margin-top: 10px;
-	padding: 7px 12px 7px 12px;
-	background: #8e44ad;
-	border: 0;
-	border-radius: 4px;
-	color: #fff;
-	margin-bottom: 15px;
+  background: #8e44ad;
+  border-radius: 4px;
+  border: 0;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  padding: 7px 12px 7px 12px;
 }
 
 @keyframes fadeAndScale {
@@ -88,18 +89,18 @@ button {
 }
 
 .fade-in {
-  opacity:0;  /* make things invisible upon start */
-  -webkit-animation:fadeAndScale ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-  -moz-animation:fadeAndScale ease-in 1;
-  animation:fadeAndScale ease-in 1;
+  opacity: 0;
+  -webkit-animation: fadeAndScale ease-in 1;
+  -moz-animation: fadeAndScale ease-in 1;
+  animation: fadeAndScale ease-in 1;
 
-  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-duration:.3s;
-  -moz-animation-duration:.3s;
-  animation-duration:.3s;
+  -webkit-animation-duration: .3s;
+  -moz-animation-duration: .3s;
+  animation-duration: .3s;
 }
 
 .fade-in.one {
@@ -127,8 +128,8 @@ button {
 	}
 
 	.box, section.box {
-		width: calc(100% - 20px);
-		border-radius: 0;
+    border-radius: 0;
+    width: calc(100% - 20px);
     -webkit-box-shadow: none;
     box-shadow: none;
 	}
@@ -152,33 +153,33 @@ button {
 	}
 
 	section.box {
-		width: calc(100% - 20px);
-		margin-top: 25%;
+    margin-top: 25%;
+    width: calc(100% - 20px);
 	}
 }
 
 .champion_quicklist_icon {
-    font-size: 7pt;
-    display: inline-block;
-    width: 60px;
-    height: 65px;
-    text-align: center;
-    padding: 2px;
-    padding-top: 5px;
-    cursor: pointer;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 7pt;
+  height: 65px;
+  padding-top: 5px;
+  padding: 2px;
+  text-align: center;
+  width: 60px;
 }
 
 #content .left_side .content li {
-    line-height: 20pt;
-    margin: 10px 0;
-    font-size: 14px;
+  font-size: 14px;
+  line-height: 20pt;
+  margin: 10px 0;
 }
 
 #champions_slider {
-	width: 80%;
+  width: 80%;
+  margin-top: -10px;
   margin: 0 auto;
   text-align: center;
-  margin-top: -10px;
 }
 
 #champions_slider li {
@@ -187,86 +188,86 @@ button {
 }
 
 #champions_slider ul, #champions_slider li {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
   width: 100%;
 }
 
 .med_champion_sprite {
-  background-image: url('http://img3.leaguecraft.com/assets/images/icons/sprites/medium_champion_sprites.jpg');
-  width: 50px;
-  height: 50px;
-  background-repeat: no-repeat;
-  margin: auto;
+  filter: brightness(.8);
   -webkit-filter: brightness(.8);
-	filter: brightness(.8);
+  background-repeat: no-repeat;
   border-radius: 50px;
+  height: 50px;
+  margin: auto;
+  width: 50px;
 }
 
 .black-and-white {
-	-webkit-filter: saturate(0);
-	filter: saturate(0);
+  -webkit-filter: saturate(0);
+  filter: saturate(0);
 }
 
 .active {
-	border: 5px solid #a062ba;
-	-webkit-filter: saturate(1);
-	filter: saturate(1);
+  -webkit-filter: saturate(1);
+  border: 5px solid #a062ba;
+  filter: saturate(1);
 }
 
 .med_champion_sprite:hover {
-	-webkit-filter: brightness(2) !important;
-	filter: brightness(2) !important;
-	-webkit-filter: saturate(1);
-	filter: saturate(1);
+  -webkit-filter: brightness(2) !important;
+  -webkit-filter: saturate(1);
+  filter: brightness(2) !important;
+  filter: saturate(1);
 }
-
-.medium_champion_1{background-position:0 -50px}.medium_champion_2{background-position:0 -100px}.medium_champion_3{background-position:0 -150px}.medium_champion_4{background-position:0 -200px}.medium_champion_5{background-position:0 -250px}.medium_champion_6{background-position:0 -300px}.medium_champion_7{background-position:0 -350px}.medium_champion_8{background-position:0 -400px}.medium_champion_9{background-position:0 -450px}.medium_champion_10{background-position:0 -500px}.medium_champion_11{background-position:0 -550px}.medium_champion_12{background-position:0 -600px}.medium_champion_13{background-position:0 -650px}.medium_champion_14{background-position:0 -700px}.medium_champion_15{background-position:0 -750px}.medium_champion_16{background-position:0 -800px}.medium_champion_17{background-position:0 -850px}.medium_champion_18{background-position:0 -900px}.medium_champion_19{background-position:0 -950px}.medium_champion_20{background-position:0 -1000px}.medium_champion_21{background-position:0 -1050px}.medium_champion_22{background-position:0 -1100px}.medium_champion_23{background-position:0 -1150px}.medium_champion_24{background-position:0 -1200px}.medium_champion_25{background-position:0 -1250px}.medium_champion_26{background-position:0 -1300px}.medium_champion_27{background-position:0 -1350px}.medium_champion_28{background-position:0 -1400px}.medium_champion_29{background-position:0 -1450px}.medium_champion_30{background-position:0 -1500px}.medium_champion_31{background-position:0 -1550px}.medium_champion_32{background-position:0 -1600px}.medium_champion_33{background-position:0 -1650px}.medium_champion_34{background-position:0 -1700px}.medium_champion_35{background-position:0 -1750px}.medium_champion_36{background-position:0 -1800px}.medium_champion_37{background-position:0 -1850px}.medium_champion_38{background-position:0 -1900px}.medium_champion_39{background-position:0 -1950px}.medium_champion_40{background-position:0 -2000px}.medium_champion_41{background-position:0 -2050px}.medium_champion_42{background-position:0 -2100px}.medium_champion_43{background-position:0 -2150px}.medium_champion_44{background-position:0 -2200px}.medium_champion_45{background-position:0 -2250px}.medium_champion_46{background-position:0 -2300px}.medium_champion_47{background-position:0 -2350px}.medium_champion_48{background-position:0 -2400px}.medium_champion_49{background-position:0 -2450px}.medium_champion_50{background-position:0 -2500px}.medium_champion_51{background-position:0 -2550px}.medium_champion_52{background-position:0 -2600px}.medium_champion_53{background-position:0 -2650px}.medium_champion_54{background-position:0 -2700px}.medium_champion_55{background-position:0 -2750px}.medium_champion_56{background-position:0 -2800px}.medium_champion_57{background-position:0 -2850px}.medium_champion_58{background-position:0 -2900px}.medium_champion_59{background-position:0 -2950px}.medium_champion_60{background-position:0 -3000px}.medium_champion_61{background-position:0 -3050px}.medium_champion_62{background-position:0 -3100px}.medium_champion_63{background-position:0 -3150px}.medium_champion_64{background-position:0 -3200px}.medium_champion_65{background-position:0 -3250px}.medium_champion_66{background-position:0 -3300px}.medium_champion_67{background-position:0 -3350px}.medium_champion_68{background-position:0 -3400px}.medium_champion_69{background-position:0 -3450px}.medium_champion_70{background-position:0 -3500px}.medium_champion_71{background-position:0 -3550px}.medium_champion_72{background-position:0 -3600px}.medium_champion_73{background-position:0 -3650px}.medium_champion_74{background-position:0 -3700px}.medium_champion_75{background-position:0 -3750px}.medium_champion_76{background-position:0 -3800px}.medium_champion_77{background-position:0 -3850px}.medium_champion_78{background-position:0 -3900px}.medium_champion_79{background-position:0 -3950px}.medium_champion_80{background-position:0 -4000px}.medium_champion_81{background-position:0 -4050px}.medium_champion_82{background-position:0 -4100px}.medium_champion_83{background-position:0 -4150px}.medium_champion_84{background-position:0 -4200px}.medium_champion_85{background-position:0 -4250px}.medium_champion_86{background-position:0 -4300px}.medium_champion_87{background-position:0 -4350px}.medium_champion_88{background-position:0 -4400px}.medium_champion_89{background-position:0 -4450px}.medium_champion_90{background-position:0 -4500px}.medium_champion_91{background-position:0 -4550px}.medium_champion_92{background-position:0 -4600px}.medium_champion_93{background-position:0 -4650px}.medium_champion_94{background-position:0 -4700px}.medium_champion_95{background-position:0 -4750px}.medium_champion_96{background-position:0 -4800px}.medium_champion_97{background-position:0 -4850px}.medium_champion_98{background-position:0 -4900px}.medium_champion_99{background-position:0 -4950px}.medium_champion_100{background-position:0 -5000px}.medium_champion_101{background-position:0 -5050px}.medium_champion_111{background-position:0 -5100px}.medium_champion_121{background-position:0 -5150px}.medium_champion_131{background-position:0 -5200px}.medium_champion_141{background-position:0 -5250px}.medium_champion_151{background-position:0 -5300px}.medium_champion_161{background-position:0 -5350px}.medium_champion_171{background-position:0 -5400px}.medium_champion_181{background-position:0 -5450px}.medium_champion_191{background-position:0 -5500px}.medium_champion_201{background-position:0 -5550px}.medium_champion_211{background-position:0 -5600px}.medium_champion_221{background-position:0 -5650px}.medium_champion_231{background-position:0 -5700px}.medium_champion_241{background-position:0 -5750px}.medium_champion_251{background-position:0 -5800px}.medium_champion_261{background-position:0 -5850px}.medium_champion_263{background-position:0 -5900px}.medium_champion_273{background-position:0 -5950px}.medium_champion_283{background-position:0 -6000px}.medium_champion_293{background-position:0 -6050px}.medium_champion_303{background-position:0 -6100px}.medium_champion_313{background-position:0 -6150px}.medium_champion_323{background-position:0 -6200px}.medium_champion_333{background-position:0 -6250px}.medium_champion_343{background-position:0 -6300px}.medium_champion_353{background-position:0 -6350px}.medium_champion_363{background-position:0 -6400px}.medium_champion_373{background-position:0 -6450px}.medium_champion_383{background-position:0 -6500px}.medium_champion_393{background-position:0 -6550px}.medium_champion_403{background-position:0 -6600px}.medium_champion_413{background-position:0 -6650px}.medium_champion_423{background-position:0 -6700px}.medium_champion_433{background-position:0 -6750px}.medium_champion_443{background-position:0 -6800px}.medium_champion_453{background-position:0 -6850px}.medium_champion_463{background-position:0 -6900px}
 
 #results-table {
   margin-top: -90px;
 }
 
 table { 
-  width: 100%;
-  padding: 1em;
-  margin: 1em auto;
   box-sizing: border-box;
+  margin: 1em auto;
+  padding: 1em;
+  width: 100%;
 }
 
-th {font-size: 1.2em; font-weight: initial;}
+th { 
+  font-size: 1.2em;
+  font-weight: initial;
+}
 
 td {
-  border-bottom: 1px solid #fbfbfb;
-  width: 20%;
-  padding: .3em .5em;
-  background-size: 0% 100%;
-  background-repeat: no-repeat;
-  -webkit-transition: all .75s ease-out;
   -moz-transition: all .75s ease-out;
-  transition: all .75s ease-out;
+  -webkit-transition: all .75s ease-out;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  border-bottom: 1px solid #fbfbfb;
   color: rgba(0,0,0,0.8);
   font-size: 14px;
+  padding: .3em .5em;
+  transition: all .75s ease-out;
+  width: 20%;
 }
 
 td:nth-child(2) {
-  font-size: 16px;
-  width: 40%;
   color: #000;
+  font-size: 16px;
   text-align: right;
+  width: 40%;
 }
 
 td:nth-child(3) { 
-  font-size: 16px;
-  width: 40%;
   color: #000;
+  font-size: 16px;
   text-align: left;
+  width: 40%;
 }
 
 .player-data-points {
-	display: inline-block;
-	width: 49%;
+  display: inline-block;
+  width: 49%;
 }
 
 .won {

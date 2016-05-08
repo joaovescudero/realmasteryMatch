@@ -18,15 +18,19 @@ RealMastery Match was created as an entry into Riot's Summer API Challenge. It a
 
 #### Setup the project
 
-* Clone the project
+* Install PHP and run it
+
+* Clone the project in your www folder (php)
 
         $ git clone https://github.com/joaovescudero/realmasteryMatch.git
 
 * Enter project folder
 
         $ cd realmasteryMatch
-        
-* Open index.html
+
+* Set your API Key in api/config/config.php
+
+* Go to http://localhost/realmasteryMatch
 
 
 ##<a name="rmindex"></a> RealMastery Index
@@ -93,7 +97,7 @@ We decided to use PHP because of its simplicity to install, the server support a
 
 ####Config:
  - **APIKEY**: Your RIOT API Key
- - **NBRMATCHES**: Number of matches you want to analyze (Recommended: 5)
+ - **NUMMATCHES**: Number of matches you want to analyze (Recommended: 5)
 
 ####Functions:
 - **getChampionId**: Gets champion id by champion name (champKey) (Optional)
