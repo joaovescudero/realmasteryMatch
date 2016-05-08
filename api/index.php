@@ -163,19 +163,23 @@
   $points["league"] = $LC;
 
   //Changing coefficient for certain roles
-  $RC = 3;
+  $RCDamageTaken = 3;
+  $RCDamageDelt = 3;
+  $RCNeutralCreeps = 3;
+  $RCWardsPlaced = 3;
   
   if(($lane == "MID" || $lane == "MIDDLE") || (($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY")){
-    $RC = 7;
+    $RCDamageDelt = 7;
   }
   if($lane == "TOP"){
-    $RC = 8;
+    $RCDamageTaken = 9;
+    $RCDamageDelt = 7;
   }
   if($lane == "JUNGLE"){
-    $RC = 7;
+    $RCNeutralCreeps = 7;
   }
   if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
-    $RC = 5;
+    $RCWardsPlaced = 5;
   }
 
   //Running our points equation
@@ -189,10 +193,10 @@
     + ($points["CreepMid"] * 3) 
     + (($points["TripleKill"] * 5) * $LC)
     + (($points["DoubleKill"] * 3) * $LC)
-    + ($points["WardsPlaced"] * $RC)
-    + (($points["TotalDamageTaken"] * $RC) * $LC)
-    + (($points["TotalDamageDealt"] * $RC) * $LC)
-    + ($points["NeutralCreeps"] * $RC)
+    + ($points["WardsPlaced"] * $RCWardsPlaced)
+    + (($points["TotalDamageTaken"] * $RCDamageTaken) * $LC)
+    + (($points["TotalDamageDealt"] * $RCDamageDelt) * $LC)
+    + ($points["NeutralCreeps"] * $RCNeutralCreeps)
     + ($points["MasteryLevel"] * 5)
     + ($points["CreepLate"] * 2) 
     + ($points["Gold"] * 3)
