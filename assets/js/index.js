@@ -118,7 +118,7 @@ $(document).ready(function(){
 		for(var i=0; i<2; i++){ /* 1 request for player */
 			$.ajax({
 			  type: 'GET',
-			  url: 'http://joaovescudero.me:8080/riot/api/?region='+match.region[i]+'&username='+match.user[i]+'&champid='+match.champion[i],
+			  url: 'https://joaovescudero.me/riot/api/?region='+match.region[i]+'&username='+match.user[i]+'&champid='+match.champion[i],
 			  contentType: 'text/plain',
 
 			  xhrFields: {
