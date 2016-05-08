@@ -1,6 +1,6 @@
 RealMastery Match
 ============
-[![GitHub Stars](https://img.shields.io/github/stars/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/issues) [![Current Version](https://img.shields.io/badge/version-0.1-green.svg)](https://github.com/joaovescudero/realmasteryMatch/) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](http://joaovescudero.me:8080/riot)
+[![GitHub Stars](https://img.shields.io/github/stars/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/joaovescudero/realmasteryMatch.svg)](https://github.com/joaovescudero/realmasteryMatch/issues) [![Current Version](https://img.shields.io/badge/version-0.1-green.svg)](https://github.com/joaovescudero/realmasteryMatch/) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://joaovescudero.me/riot)
 
 * [Demo](#demo)
 * [Overview](#overview)
