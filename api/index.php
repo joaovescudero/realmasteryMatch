@@ -14,7 +14,7 @@
   $USERNAME = $_GET["username"];
 
   //Starting main class
-  $main = new Main($APIKEY, $NBRMATCHES, $BASEURL, $REGION, $GLOBALURL);
+  $main = new Main($APIKEY, $NUMMATCHES, $BASEURL, $REGION, $GLOBALURL);
 
   //Getting Champ Id
   if(isset($_GET["champkey"])){
@@ -28,7 +28,7 @@
 
   //Getting User League
   $userLeague = $main->playerLeague($userId);
-  $coefficient = $main->leagueCoefficient($userLeague);
+  $LC = $main->leagueCoefficient($userLeague);
 
   //Getting User champId mastery
   $champMastery = $main->playerMastery($userId, $champId);
@@ -44,13 +44,13 @@
   //User Role
   $role = array();
   //Global user stats
-  $statsGlobal = array('nPartidas' => 0, 'nPartidasGanhas' => 0, 'nMaestria' => 0);
+  $statsGlobal = array('nMatches' => 0, 'nMatchesWon' => 0, 'MasteryLevel' => 0);
   //Global user points
-  $points = array('KDA' => 0, 'Gold' => 0, 'WardsPlaced' => 0, 'KillingSpree' => 0, "DoubleKill" => 0, "TripleKill" => 0, "QuadraKill" => 0, "PentaKill" => 0, 'CreepEarly' => 0, 'CreepMid' => 0, 'CreepLate' => 0, 'NeutralCreep' => 0, 'TotalDamageDealt' => 0, 'TotalDamageTaken' => 0);
+  $points = array('KDA' => 0, 'Gold' => 0, 'WardsPlaced' => 0, 'KillingSpree' => 0, "DoubleKill" => 0, "TripleKill" => 0, "QuadraKill" => 0, "PentaKill" => 0, 'CreepEarly' => 0, 'CreepMid' => 0, 'CreepLate' => 0, 'NeutralCreeps' => 0, 'TotalDamageDealt' => 0, 'TotalDamageTaken' => 0);
   //Setting user mastery
-  $statsGlobal["nMaestria"] = $champMastery;
+  $statsGlobal["MasteryLevel"] = $champMastery;
 
-  for($i = 0; $i < $NBRMATCHES; $i++){
+  for($i = 0; $i < $NUMMATCHES; $i++){
     //Setting local stats array
     $stats = array('Role' => '', 'Lane' => '');
 
@@ -78,10 +78,10 @@
 
       //Getting number of matches and number of wins
       if($jsonNMatch['participants'][$participantId]["stats"]["winner"]){
-        $statsGlobal['nPartidas'] += 1;
-        $statsGlobal['nPartidasGanhas'] += 1;
+        $statsGlobal['nMatches'] += 1;
+        $statsGlobal['nMatchesWon'] += 1;
       }else{
-        $statsGlobal['nPartidas'] += 1;
+        $statsGlobal['nMatches'] += 1;
       }
 
       //Getting user KDA
@@ -120,7 +120,7 @@
         $points["CreepLate"] += $jsonNMatch['participants'][$participantId]["timeline"]["creepsPerMinDeltas"]["twentyToThirty"];
       }
       //Getting user neutral CS
-      $points["NeutralCreep"] += $jsonNMatch['participants'][$participantId]["stats"]["neutralMinionsKilled"];
+      $points["NeutralCreeps"] += $jsonNMatch['participants'][$participantId]["stats"]["neutralMinionsKilled"];
       //Getting user total damage dealt
       $points["TotalDamageDealt"] += $jsonNMatch['participants'][$participantId]["stats"]["totalDamageDealt"];
       //Getting user total damage taken
@@ -143,61 +143,57 @@
   $lane = key($lane);
 
   //Correcting user points
-  $points["KDA"] = $points["KDA"] / $statsGlobal["nPartidas"];
-  $points["Gold"] = ($points["Gold"] / 1000) / $statsGlobal["nPartidas"];
-  $points["WardsPlaced"] = $points["WardsPlaced"] / $statsGlobal["nPartidas"];
-  $points["KillingSpree"] = $points["KillingSpree"] / $statsGlobal["nPartidas"];
-  $points["DoubleKill"] = $points["DoubleKill"] / $statsGlobal["nPartidas"];
-  $points["TripleKill"] = $points["TripleKill"] / $statsGlobal["nPartidas"];
-  $points["QuadraKill"] = $points["QuadraKill"] / $statsGlobal["nPartidas"];
-  $points["PentaKill"] = $points["PentaKill"] / $statsGlobal["nPartidas"];
-  $points["CreepEarly"] = $points["CreepEarly"] / $statsGlobal["nPartidas"];
-  $points["CreepMid"] = $points["CreepMid"] / $statsGlobal["nPartidas"];
-  $points["CreepLate"] = $points["CreepLate"] / $statsGlobal["nPartidas"];
-  $points["NeutralCreep"] = $points["NeutralCreep"] / $statsGlobal["nPartidas"];
-  $points["TotalDamageDealt"] = ($points["TotalDamageDealt"] / 10000) / $statsGlobal["nPartidas"];
-  $points["TotalDamageTaken"] = ($points["TotalDamageTaken"] / 10000) / $statsGlobal["nPartidas"];
-  $points["nPartidas"] = $statsGlobal['nPartidas'];
-  $points["nPartidasGanhas"] = ($statsGlobal["nPartidasGanhas"] / $statsGlobal["nPartidas"]) * 10;
-  $points["nMaestria"] = $statsGlobal["nMaestria"];
-  $points["league"] = $coefficient;
+  $points["KDA"] = $points["KDA"] / $statsGlobal["nMatches"];
+  $points["Gold"] = ($points["Gold"] / 1000) / $statsGlobal["nMatches"];
+  $points["WardsPlaced"] = $points["WardsPlaced"] / $statsGlobal["nMatches"];
+  $points["KillingSpree"] = $points["KillingSpree"] / $statsGlobal["nMatches"];
+  $points["DoubleKill"] = $points["DoubleKill"] / $statsGlobal["nMatches"];
+  $points["TripleKill"] = $points["TripleKill"] / $statsGlobal["nMatches"];
+  $points["QuadraKill"] = $points["QuadraKill"] / $statsGlobal["nMatches"];
+  $points["PentaKill"] = $points["PentaKill"] / $statsGlobal["nMatches"];
+  $points["CreepEarly"] = $points["CreepEarly"] / $statsGlobal["nMatches"];
+  $points["CreepMid"] = $points["CreepMid"] / $statsGlobal["nMatches"];
+  $points["CreepLate"] = $points["CreepLate"] / $statsGlobal["nMatches"];
+  $points["NeutralCreeps"] = $points["NeutralCreeps"] / $statsGlobal["nMatches"];
+  $points["TotalDamageDealt"] = ($points["TotalDamageDealt"] / 10000) / $statsGlobal["nMatches"];
+  $points["TotalDamageTaken"] = ($points["TotalDamageTaken"] / 10000) / $statsGlobal["nMatches"];
+  $points["nMatches"] = $statsGlobal['nMatches'];
+  $points["nMatchesWon"] = ($statsGlobal["nMatchesWon"] / $statsGlobal["nMatches"]) * 10;
+  $points["MasteryLevel"] = $statsGlobal["MasteryLevel"];
+  $points["league"] = $LC;
 
   //Changing coefficient for certain roles
-  $coefficientDamageTaken = 3;
-  $coefficientDamageDelt = 3;
-  $coefficientNeutralCreep = 3;
-  $coefficientWardsPlaced = 3;
+  $RC = 3;
   
   if(($lane == "MID" || $lane == "MIDDLE") || (($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY")){
-    $coefficientDamageDelt = 7;
+    $RC = 7;
   }
   if($lane == "TOP"){
-    $coefficientDamageTaken = 9;
-    $coefficientDamageDelt = 7;
+    $RC = 8;
   }
   if($lane == "JUNGLE"){
-    $coefficientNeutralCreep = 7;
+    $RC = 7;
   }
   if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
-    $coefficientWardsPlaced = 5;
+    $RC = 5;
   }
 
   //Running our points equation
   $equation = (
       ($points["CreepEarly"] * 5)
-    + (($points["nPartidasGanhas"] * 10) * $coefficient)
-    + (($points["KDA"] * 9) * $coefficient)
-    + (($points["PentaKill"] * 9) * $coefficient)
-    + (($points["QuadraKill"] * 7) * $coefficient)
-    + (($points["KillingSpree"] * 8) * $coefficient)
+    + (($points["nMatchesWon"] * 10) * $LC)
+    + (($points["KDA"] * 9) * $LC)
+    + (($points["PentaKill"] * 9) * $LC)
+    + (($points["QuadraKill"] * 7) * $LC)
+    + (($points["KillingSpree"] * 8) * $LC)
     + ($points["CreepMid"] * 3) 
-    + (($points["TripleKill"] * 5) * $coefficient)
-    + (($points["DoubleKill"] * 3) * $coefficient)
-    + ($points["WardsPlaced"] * $coefficientWardsPlaced)
-    + (($points["TotalDamageTaken"] * $coefficientDamageTaken) * $coefficient)
-    + (($points["TotalDamageDealt"] * $coefficientDamageDelt) * $coefficient)
-    + ($points["NeutralCreep"] * $coefficientNeutralCreep)
-    + ($points["nMaestria"] * 5)
+    + (($points["TripleKill"] * 5) * $LC)
+    + (($points["DoubleKill"] * 3) * $LC)
+    + ($points["WardsPlaced"] * $RC)
+    + (($points["TotalDamageTaken"] * $RC) * $LC)
+    + (($points["TotalDamageDealt"] * $RC) * $LC)
+    + ($points["NeutralCreeps"] * $RC)
+    + ($points["MasteryLevel"] * 5)
     + ($points["CreepLate"] * 2) 
     + ($points["Gold"] * 3)
     )
@@ -206,7 +202,7 @@
       $points["CreepEarly"] 
     + $points["CreepMid"]
     + $points["CreepLate"]
-    + $points["nPartidasGanhas"]
+    + $points["nMatchesWon"]
     + $points["KDA"]
     + $points["PentaKill"]
     + $points["QuadraKill"]
@@ -217,14 +213,14 @@
     + $points["WardsPlaced"]
     + $points["TotalDamageTaken"]
     + $points["TotalDamageDealt"]
-    + $points["NeutralCreep"]
-    + $points["nMaestria"]
+    + $points["NeutralCreeps"]
+    + $points["MasteryLevel"]
     + $points["CreepLate"]
     + $points["Gold"]
   );
 
   //Rounding result
-  $equation = round(($equation * (1 - (1/$points["nPartidas"])))*100);
+  $equation = round(($equation * (1 - (1/$points["nMatches"])))*100);
 
   //Showing and encoding result
   $result = array( 'points' => $equation, 'stats' => $points, 'user' => $USERNAME);

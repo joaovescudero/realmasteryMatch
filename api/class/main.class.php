@@ -12,7 +12,7 @@
      * Limit of matches
      * @var Int
      */
-    var $NBRMATCHES;
+    var $NUMMATCHES;
 
     /**
      * Base url
@@ -35,13 +35,13 @@
     /**
      * Sending informations to class
      * @param  String $APIKEY     Riot API Key
-     * @param  Int    $NBRMATCHES Limit of matches
+     * @param  Int    $NUMMATCHES Limit of matches
      * @param  String $BASEURL    Base url
      * @param  String $REGION     Region
      */
-    public function __construct($APIKEY, $NBRMATCHES, $BASEURL, $REGION, $GLOBALURL){
+    public function __construct($APIKEY, $NUMMATCHES, $BASEURL, $REGION, $GLOBALURL){
       $this->APIKEY = $APIKEY;
-      $this->NBRMATCHES = $NBRMATCHES;
+      $this->NUMMATCHES = $NUMMATCHES;
       $this->BASEURL = strtolower(sprintf($BASEURL, $REGION));
       $this->REGION = strtolower($REGION);
       $this->GLOBALURL = $GLOBALURL."".$APIKEY;
@@ -195,7 +195,7 @@
              "?championIds=".
              $champId.
              "&beginIndex=0&endIndex=".
-             $this->NBRMATCHES.
+             $this->NUMMATCHES.
              "&api_key=".
              $this->APIKEY;
       //Connection
