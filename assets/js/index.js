@@ -137,15 +137,6 @@ $(document).ready(function(){
 			  		match.results[1] = json;
 			  	}
 
-			  	/* Round stats of a summoner in 2 decimal places */
-			  	for(var i = 0; i < 2; i++){
-				  	$('.player-data.p'+i).each(function(){
-				  		var stat = $(this).data('data');
-			  			$(this).text(round(match.results[i].stats[stat], 2));
-				  		p0.push(round(match.results[i].stats[stat], 2));
-				  	});
-			  	}
-
 			  	/* Check if both players results is already loaded */
 			  	if(match.results[0] && match.results[1]){
 					
@@ -155,15 +146,28 @@ $(document).ready(function(){
 					/* Shows the match results table */
 					$('#results-table').show(400);
 
+					/* Round stats of a summoner in 2 decimal places */
+				  	for(var i = 0; i < 2; i++){
+					  	$('.player-data.p'+i).each(function(){
+					  		var stat = $(this).data('data');
+				  			$(this).text(round(match.results[i].stats[stat], 2));
+				  			if(i==0){
+					  			p0.push(round(match.results[i].stats[stat], 2));
+					  		}else{
+					  			p1.push(round(match.results[i].stats[stat], 2));
+					  		}	
+					  	});
+				  	}
+
 			  		/* Compare stats between players: won, lose or tie */
 			  		for(var i=0;i<stats.length;i++){
 			  			if(p0[i] > p1[i]){
 			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('won');
 			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('lose');
-			  			}else if(p0[i] < p1[i]){
+			  			} else if(p0[i] < p1[i]){
 			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('lose');
 			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('won');
-			  			}else{
+			  			} else {
 			  				$('.player-data.p0.'+stats[i].toLowerCase()).addClass('tie');
 			  				$('.player-data.p1.'+stats[i].toLowerCase()).addClass('tie');
 			  			}
