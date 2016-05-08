@@ -10,3 +10,4 @@
 
   //Base API url
   $BASEURL = "https://%s.api.pvp.net";
+  

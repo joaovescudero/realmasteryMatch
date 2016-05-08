@@ -229,3 +229,4 @@
   //Showing and encoding result
   $result = array( 'points' => $equation, 'stats' => $points, 'user' => $USERNAME);
   echo json_encode($result);
+  
