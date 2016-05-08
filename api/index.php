@@ -24,17 +24,17 @@
   }
 
   //Getting User ID
-  $userId = $main->playerUsername($USERNAME);
+  $userId = $main->getPlayerUsername($USERNAME);
 
   //Getting User League
-  $userLeague = $main->playerLeague($userId);
-  $LC = $main->leagueCoefficient($userLeague);
+  $userLeague = $main->getPlayerLeague($userId);
+  $LC = $main->getLeagueCoefficient($userLeague);
 
   //Getting User champId mastery
-  $champMastery = $main->playerMastery($userId, $champId);
+  $champMastery = $main->getPlayerMastery($userId, $champId);
 
   //Getting User matches
-  $userMatches = ($main->playerMatches($userId, $champId));
+  $userMatches = ($main->getPlayerMatches($userId, $champId));
 
   //Setting global arrays
   //Error messages

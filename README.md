@@ -101,12 +101,12 @@ We decided to use PHP because of its simplicity to install, the server support a
 
 ####Functions:
 - **getChampionId**: Gets champion id by champion name (champKey) (Optional)
-- **playerUsename**: Gets the summoner id by username
-- **playerLeague**: Gets the summoner league by summoner id (just leagues, not division)
-- **leagueCoefficient**: Gets summoner's league coefficient
-- **playerMastery**: Gets summoner's champion mastery
-- **playerMatches**: Gets summoner's ranked matches id
+- **getPlayerUsename**: Gets the summoner id by username
+- **getPlayerLeague**: Gets the summoner league by summoner id (just leagues, not division)
+- **getPlayerMastery**: Gets summoner's champion mastery
+- **getPlayerMatches**: Gets summoner's ranked matches id
 - **getMatch**: Gets data from a specific match by match id
+- **getLeagueCoefficient**: Gets summoner's league coefficient
 
 ####URL Request Example:
 `http://joaovescudero.me:8080/riot/api/?region=br&username=HKZ%20BrushyMan&champid=412`

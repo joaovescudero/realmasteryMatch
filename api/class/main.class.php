@@ -33,7 +33,7 @@
     var $GLOBALURL;
 
     /**
-     * Sending informations to class
+     * Sends informations to class
      * @param  String $APIKEY     Riot API Key
      * @param  Int    $NUMMATCHES Limit of matches
      * @param  String $BASEURL    Base url
@@ -48,16 +48,16 @@
     }
 
     /**
-     * Getting champ Id
+     * Gets champion id by champion name (champKey) (Optional)
      * @param  String $champKey Champ Key
      * @return Int              Champ Id
      */
-    public function champId($champKey){
+    public function getChampionId($champKey){
       //Connection
       $bridge = file_get_contents($this->GLOBALURL);
       //Decode json
       $json = json_decode($bridge, true);
-      //Verifying if champKey exist
+      //Verify if champKey exist
       if($json["data"][$champKey]["id"] == ""){$message['message'] = 'Champion key not found'; exit(json_encode($message));}
       //Returning champId
       return $json["data"][$champKey]["id"];
@@ -65,11 +65,11 @@
     }
 
     /**
-     * Changing player username to user ID
+     * Gets the summoner id by username
      * @param  String $username player username
      * @return Int              player ID
      */
-    public function playerUsername($username){
+    public function getPlayerUsername($username){
       //Transforming username
       $username = strtolower(str_replace(' ', '', $username));
 
@@ -92,11 +92,11 @@
     }
 
     /**
-     * Get play league
+     * Gets the summoner league by summoner id (just leagues, not division)
      * @param  Int $playerId Player id
      * @return Int           Coefficient multiplicator
      */
-    public function playerLeague($playerId){
+    public function getPlayerLeague($playerId){
       //Creating an Url
       $url = $this->BASEURL.
              "/api/lol/".
@@ -112,11 +112,16 @@
       $json = json_decode($bridge, true);
       //Getting User League
       $userLeague = $json[$playerId][0]["tier"];
-      //Returning user league
+      //Returns user league
       return $userLeague;
     }
 
-    public function leagueCoefficient($league){
+    /**
+      * Gets summoner's league coefficient
+      * @param  String  $league      Summmoner's league
+      * #return Int     $coefficient League Coefficient
+      */
+    public function getLeagueCoefficient($league){
       //Setting Coefficient
       $coefficient = 1;
       //Getting new coefficient
@@ -146,17 +151,16 @@
           $coefficient = 1;
           break;
       }
-      //Return coefficient
       return $coefficient;
     }
 
     /**
-     * Getting player mastery
+     * Gets summoner's champion mastery
      * @param  Int $userId  User Id
      * @param  Int $champId Champion Id
      * @return Int          Champion mastery
      */
-    public function playerMastery($userId, $champId){
+    public function getPlayerMastery($userId, $champId){
       //Verifying region
       if($this->REGION == "br" || $this->REGION == "euw"){$region=$this->REGION."1";}elseif($this->REGION == "eune"){$region="eun1";}else{$region=$this->REGION;}
       //Creating an Url
@@ -175,17 +179,17 @@
       if(!$bridge){$message['message'] = 'Champion id not found'; exit(0);}
       //Decode json
       $json = json_decode($bridge, true);
-      //Returning champion mastery
+      //Returns champion mastery
       return $json['championLevel'];
     }
 
     /**
-     * Get player matches
+     * Gets summoner's ranked matches id
      * @param  Int $userId  User Id
      * @param  Int $champId Champion Id
-     * @return Array          Matches Array
+     * @return Array        Matches Array
      */
-    public function playerMatches($userId, $champId){
+    public function getPlayerMatches($userId, $champId){
       //Creating an Url
       $url = $this->BASEURL.
              "/api/lol/".
@@ -202,10 +206,15 @@
       $bridge = file_get_contents($url);
       //Verifying if matches exist
       if(!$bridge){$message['message'] = 'Matches not found'; exit(json_encode($message));}
-      //Returning and decoding json
+      //Returns and decoding json
       return json_decode($bridge, true);
     }
 
+    /**
+     * Gets data from a specific match by match id
+     * @param  Int    $matchId Match Id
+     * @return Array           Match Data
+     */
     public function getMatch($matchId){
       //Creating an Url
       $url = $this->BASEURL.
@@ -220,10 +229,8 @@
       if(!$bridge){return $this->getMatch($matchId);}
       //Verifying connection
       if(!$bridge){return '';}
-      //Decode json
-      $json = json_decode($bridge, true);
-      //Returning json
-      return $json;
+      //Returns json
+      return json_decode($bridge, true);
     }
   }
   
