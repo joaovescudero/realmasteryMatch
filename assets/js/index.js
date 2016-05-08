@@ -11,7 +11,7 @@ $(document).ready(function(){
 	var p0points;
 	var p1points;
 	var p1=[];
-	var list=["KDA", "Gold", "WardsPlaced", "KillingSpree", "DoubleKill", "TripleKill", "QuadraKill", "PentaKill", "CreepEarly", "CreepMid", "CreepLate", "NeutralCreep", "TotalDamageDealt", "TotalDamageTaken", "nPartidasGanhas", "nMaestria", "league"];
+	var list=["KDA", "Gold", "WardsPlaced", "KillingSpree", "DoubleKill", "TripleKill", "QuadraKill", "PentaKill", "CreepEarly", "CreepMid", "CreepLate", "NeutralCreeps", "TotalDamageDealt", "TotalDamageTaken", "nMatchesWon", "MasteryLevel", "league"];
 	$('#results-table').hide();
 	$('#loading').hide();
 	$('#match-wrapper').hide();
@@ -143,8 +143,8 @@ $(document).ready(function(){
 			  		$('.player-data.p0.league').text(getUserLeague(p0[16]));
 			  		$('.player-data.p1.league').text(getUserLeague(p1[16]));
 
-			  		$('.player-data.p0.npartidasganhas').text(p0[14]*10+'%');
-			  		$('.player-data.p1.npartidasganhas').text(p1[14]*10+'%');
+			  		$('.player-data.p0.nmatcheswon').text(p0[14]*10+'%');
+			  		$('.player-data.p1.nmatcheswon').text(p1[14]*10+'%');
 
 			  		if(p0points > p1points){
 		  				$('.player-data-points.p0').addClass('won');
