@@ -87,9 +87,8 @@ $(document).ready(function(){
 		/* Start loading gif */
 		$('#loading').show(300);
 
-		/* Shows the match results wrapper and table */
+		/* Shows the match results wrapper */
 		$('#match-wrapper').show(200);
-		$('#results-table').show(400);
 
 		/* Search for the champion name by a champion id (used when the match comes from a direct link with hash) */
 		for(var i=0; i < 2; i++){ /* 2 players */
@@ -152,6 +151,9 @@ $(document).ready(function(){
 					
 					/* Hide the loading gif */
 					$('#loading').hide(300);
+					
+					/* Shows the match results table */
+					$('#results-table').show(400);
 
 			  		/* Compare stats between players: won, lose or tie */
 			  		for(var i=0;i<stats.length;i++){
@@ -197,6 +199,7 @@ $(document).ready(function(){
 
 			  error: function(err) {
 			  	console.log(err);
+				$('#loading').hide(300);
 			  }
 			});
 		}
