@@ -187,7 +187,7 @@
   }
   else if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
     $RCWardsPlaced = 5;
-    $RCDamageTaken = 4;
+    $RCDamageTaken = 5;
     $KDA = $points["KDAAssist"];
   }
 
