@@ -64,7 +64,7 @@
     if(!empty($matchId)){
       $jsonNMatch = $main->getMatch($matchId);
     }
-    
+
     if(isset($jsonNMatch)){
       //Getting participant Id
       $participantId = null;
@@ -74,7 +74,7 @@
         }
       }
 
-      $participantId = $participantId - 1;
+      $participantId -= 1;
 
       //Getting number of matches and number of wins
       if($jsonNMatch['participants'][$participantId]["stats"]["winner"]){
@@ -95,9 +95,8 @@
       $kdaRatio = ($jsonNMatch['participants'][$participantId]["stats"]["kills"] + $jsonNMatch['participants'][$participantId]["stats"]["assists"]) / $jsonNMatch['participants'][$participantId]["stats"]["deaths"];
 
       if($kdaRatio > 0){
-        $points["KDA"] = $kdaRatio + $points["KDA"];
+        $points["KDA"] += $kdaRatio;
       }
-
       //Getting user gold
       $points["Gold"] += $jsonNMatch['participants'][$participantId]["stats"]["goldEarned"];
       //Getting user ward placed
@@ -125,6 +124,8 @@
       $points["TotalDamageDealt"] += $jsonNMatch['participants'][$participantId]["stats"]["totalDamageDealt"];
       //Getting user total damage taken
       $points["TotalDamageTaken"] += $jsonNMatch['participants'][$participantId]["stats"]["totalDamageTaken"];
+      //Getting user assists
+      $points["KDASup"] += ($jsonNMatch['participants'][$participantId]["stats"]["kills"] + ($jsonNMatch['participants'][$participantId]["stats"]["assists"] * 1.5)) / $jsonNMatch['participants'][$participantId]["stats"]["deaths"];
       //Getting user role
       $stats["Role"] = $userMatches['matches'][$i]["role"];
       //Getting user lane
@@ -144,6 +145,7 @@
 
   //Correcting user points
   $points["KDA"] = $points["KDA"] / $statsGlobal["nMatches"];
+  $points["KDASup"] = $points["KDASup"] / $statsGlobal["nMatches"];
   $points["Gold"] = ($points["Gold"] / 1000) / $statsGlobal["nMatches"];
   $points["WardsPlaced"] = $points["WardsPlaced"] / $statsGlobal["nMatches"];
   $points["KillingSpree"] = $points["KillingSpree"] / $statsGlobal["nMatches"];
@@ -167,19 +169,25 @@
   $RCDamageDelt = 3;
   $RCNeutralCreeps = 3;
   $RCWardsPlaced = 3;
-  
-  if(($lane == "MID" || $lane == "MIDDLE") || (($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY")){
+
+  if(($lane == "MID" || $lane == "MIDDLE")){
+    $RCDamageDelt = 7;
+  }
+  if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY"){
     $RCDamageDelt = 7;
   }
   if($lane == "TOP"){
-    $RCDamageTaken = 9;
-    $RCDamageDelt = 7;
+    $RCDamageTaken = 6;
+    $RCDamageDelt = 5;
   }
   if($lane == "JUNGLE"){
     $RCNeutralCreeps = 7;
+    $RCDamageTaken = 4;
   }
   if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
     $RCWardsPlaced = 5;
+    $RCDamageTaken = 4;
+    $points["KDA"] = $points["KDASup"];
   }
 
   //Running our points equation
@@ -190,7 +198,7 @@
     + (($points["PentaKill"] * 9) * $LC)
     + (($points["QuadraKill"] * 7) * $LC)
     + (($points["KillingSpree"] * 8) * $LC)
-    + ($points["CreepMid"] * 3) 
+    + ($points["CreepMid"] * 3)
     + (($points["TripleKill"] * 5) * $LC)
     + (($points["DoubleKill"] * 3) * $LC)
     + ($points["WardsPlaced"] * $RCWardsPlaced)
@@ -198,12 +206,12 @@
     + (($points["TotalDamageDealt"] * $RCDamageDelt) * $LC)
     + ($points["NeutralCreeps"] * $RCNeutralCreeps)
     + ($points["MasteryLevel"] * 5)
-    + ($points["CreepLate"] * 2) 
+    + ($points["CreepLate"] * 2)
     + ($points["Gold"] * 3)
     )
     / //divided by
     (
-      $points["CreepEarly"] 
+      $points["CreepEarly"]
     + $points["CreepMid"]
     + $points["CreepLate"]
     + $points["nMatchesWon"]
@@ -229,4 +237,3 @@
   //Showing and encoding result
   $result = array( 'points' => $equation, 'stats' => $points, 'user' => $USERNAME);
   echo json_encode($result);
-  
