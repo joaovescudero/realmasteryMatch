@@ -86,7 +86,7 @@ Datas are different from league to league, in high elos is more difficult to get
 Each role have its main characteristics. Comparing different players in different roles and with different champions is something very hard and cause a lot of discussions. Since the RIOT API provides datas about which role the summoner played in a specific game, we use this data to balance all those differences: wardsPlaced is valuable for support, so does totalDamageDealt for mid laners, top laners and adcarries, also neutralCreeps for junglers (they dont have high creep stats).
 
 ####Future work
-Role coefficient can be use to reduce grades if the stats are too low, or can elevate if they're too high.
+Role coefficient can be use to reduce points if the stats are too low, or can elevate if they're too high.
 
 ##<a name="stack"></a>Technology Stack
 ###API Processor
