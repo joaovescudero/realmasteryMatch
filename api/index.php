@@ -169,12 +169,15 @@
   $RCDamageDelt = 3;
   $RCNeutralCreeps = 3;
   $RCWardsPlaced = 3;
+  $RCKda = 9;
 
   if(($lane == "MID" || $lane == "MIDDLE")){
     $RCDamageDelt = 7;
+    $RCKda = 10;
   }
   if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY"){
     $RCDamageDelt = 7;
+    $RCKda = 11;
   }
   if($lane == "TOP"){
     $RCDamageTaken = 6;
@@ -194,7 +197,7 @@
   $equation = (
       ($points["CreepEarly"] * 5)
     + (($points["nMatchesWon"] * 10) * $LC)
-    + (($points["KDA"] * 9) * $LC)
+    + (($points["KDA"] * $RCKda) * $LC)
     + (($points["PentaKill"] * 9) * $LC)
     + (($points["QuadraKill"] * 7) * $LC)
     + (($points["KillingSpree"] * 8) * $LC)
