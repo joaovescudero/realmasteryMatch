@@ -118,7 +118,7 @@ $(document).ready(function(){
 		window.location.hash = match.region[0] + '-' + match.user[0].replace(' ', '') + '-' + match.champion[0] + '!vs!' + match.region[1] + '-' + match.user[1].replace(' ', '') + '-' + match.champion[1];
 
 		/* Add the facebook Share+Like button so that users can share/like the match */
-		$('#nav-p').html('').after('<div class="fb-like" data-href="' + window.location.href + '" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>');
+		$('#nav-p').html('').append('<div class="fb-like" data-href="' + window.location.href + '" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>');
 
 
 		for(var i=0; i<2; i++){ /* 1 request for player */
