@@ -1,6 +1,6 @@
 <?php
   //
-  header("Access-Control-Allow-Origin: http://localhost:8080/");
+  header("Access-Control-Allow-Origin: https://localhost:8080/");
 
   //Including config file
   require_once("config/config.php");
@@ -18,7 +18,7 @@
 
   //Getting Champ Id
   if(isset($_GET["champkey"])){
-    $champId = $main->champId($_GET["champkey"]);
+    $champId = $main->getChampionId($_GET["champkey"]);
   }elseif(isset($_GET["champid"])){
     $champId = $_GET["champid"];
   }
@@ -46,7 +46,7 @@
   //Global user stats
   $statsGlobal = array('nMatches' => 0, 'nMatchesWon' => 0, 'MasteryLevel' => 0);
   //Global user points
-  $points = array('KDA' => 0, 'Gold' => 0, 'WardsPlaced' => 0, 'KillingSpree' => 0, "DoubleKill" => 0, "TripleKill" => 0, "QuadraKill" => 0, "PentaKill" => 0, 'CreepEarly' => 0, 'CreepMid' => 0, 'CreepLate' => 0, 'NeutralCreeps' => 0, 'TotalDamageDealt' => 0, 'TotalDamageTaken' => 0);
+  $points = array('KDA' => 0, 'KDAAssist' => 0, 'Gold' => 0, 'WardsPlaced' => 0, 'KillingSpree' => 0, "DoubleKill" => 0, "TripleKill" => 0, "QuadraKill" => 0, "PentaKill" => 0, 'CreepEarly' => 0, 'CreepMid' => 0, 'CreepLate' => 0, 'NeutralCreeps' => 0, 'TotalDamageDealt' => 0, 'TotalDamageTaken' => 0);
   //Setting user mastery
   $statsGlobal["MasteryLevel"] = $champMastery;
 
@@ -125,7 +125,7 @@
       //Getting user total damage taken
       $points["TotalDamageTaken"] += $jsonNMatch['participants'][$participantId]["stats"]["totalDamageTaken"];
       //Getting user assists
-      $points["KDASup"] += ($jsonNMatch['participants'][$participantId]["stats"]["kills"] + ($jsonNMatch['participants'][$participantId]["stats"]["assists"] * 1.5)) / $jsonNMatch['participants'][$participantId]["stats"]["deaths"];
+      $points["KDAAssist"] += ($jsonNMatch['participants'][$participantId]["stats"]["kills"] + ($jsonNMatch['participants'][$participantId]["stats"]["assists"] * 1.5)) / $jsonNMatch['participants'][$participantId]["stats"]["deaths"];
       //Getting user role
       $stats["Role"] = $userMatches['matches'][$i]["role"];
       //Getting user lane
@@ -145,7 +145,7 @@
 
   //Correcting user points
   $points["KDA"] = $points["KDA"] / $statsGlobal["nMatches"];
-  $points["KDASup"] = $points["KDASup"] / $statsGlobal["nMatches"];
+  $points["KDAAssist"] = $points["KDAAssist"] / $statsGlobal["nMatches"];
   $points["Gold"] = ($points["Gold"] / 1000) / $statsGlobal["nMatches"];
   $points["WardsPlaced"] = $points["WardsPlaced"] / $statsGlobal["nMatches"];
   $points["KillingSpree"] = $points["KillingSpree"] / $statsGlobal["nMatches"];
@@ -166,72 +166,68 @@
 
   //Changing coefficient for certain roles
   $RCDamageTaken = 3;
-  $RCDamageDelt = 3;
+  $RCDamageDealt = 3;
   $RCNeutralCreeps = 3;
   $RCWardsPlaced = 3;
   $RCKda = 9;
+  $KDA = $points["KDA"];
 
-  if(($lane == "MID" || $lane == "MIDDLE")){
-    $RCDamageDelt = 7;
+  if(($lane == "MID" || $lane == "MIDDLE") || (($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY")){
+    $RCDamageDealt = 7;
     $RCKda = 10;
   }
-  if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_CARRY"){
-    $RCDamageDelt = 7;
-    $RCKda = 11;
-  }
-  if($lane == "TOP"){
+  else if($lane == "TOP"){
     $RCDamageTaken = 6;
     $RCDamageDelt = 5;
   }
-  if($lane == "JUNGLE"){
-    $RCNeutralCreeps = 7;
+  else if($lane == "JUNGLE"){
+    $RCNeutralCreeps = 4.5;
     $RCDamageTaken = 4;
+    $KDA = $points["KDAAssist"];
   }
-  if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
+  else if(($lane == "BOT" || $lane == "BOTTOM") & $role == "DUO_SUPPORT"){
     $RCWardsPlaced = 5;
     $RCDamageTaken = 4;
-    $points["KDA"] = $points["KDASup"];
+    $KDA = $points["KDAAssist"];
   }
 
   //Running our points equation
   $equation = (
       ($points["CreepEarly"] * 5)
-    + (($points["nMatchesWon"] * 10) * $LC)
-    + (($points["KDA"] * $RCKda) * $LC)
-    + (($points["PentaKill"] * 9) * $LC)
-    + (($points["QuadraKill"] * 7) * $LC)
-    + (($points["KillingSpree"] * 8) * $LC)
     + ($points["CreepMid"] * 3)
-    + (($points["TripleKill"] * 5) * $LC)
-    + (($points["DoubleKill"] * 3) * $LC)
-    + ($points["WardsPlaced"] * $RCWardsPlaced)
-    + (($points["TotalDamageTaken"] * $RCDamageTaken) * $LC)
-    + (($points["TotalDamageDealt"] * $RCDamageDelt) * $LC)
-    + ($points["NeutralCreeps"] * $RCNeutralCreeps)
-    + ($points["MasteryLevel"] * 5)
     + ($points["CreepLate"] * 2)
     + ($points["Gold"] * 3)
+    + (($points["nMatchesWon"] * 10) * $LC)
+    + (($KDA * $RCKda) * $LC)
+    + (($points["PentaKill"] * 9) * $LC)
+    + (($points["QuadraKill"] * 7) * $LC)
+    + (($points["TripleKill"] * 5) * $LC)
+    + (($points["DoubleKill"] * 3) * $LC)
+    + (($points["KillingSpree"] * 8) * $LC)
+    + ($points["TotalDamageDealt"] * $RCDamageDealt)
+    + ($points["TotalDamageTaken"] * $RCDamageTaken)
+    + ($points["WardsPlaced"] * $RCWardsPlaced)
+    + ($points["NeutralCreeps"] * $RCNeutralCreeps)
+    + ($points["MasteryLevel"] * 5)
     )
     / //divided by
     (
-      $points["CreepEarly"]
-    + $points["CreepMid"]
-    + $points["CreepLate"]
-    + $points["nMatchesWon"]
-    + $points["KDA"]
-    + $points["PentaKill"]
-    + $points["QuadraKill"]
-    + $points["KillingSpree"]
-    + $points["CreepMid"]
-    + $points["TripleKill"]
-    + $points["DoubleKill"]
-    + $points["WardsPlaced"]
-    + $points["TotalDamageTaken"]
-    + $points["TotalDamageDealt"]
-    + $points["NeutralCreeps"]
-    + $points["MasteryLevel"]
-    + $points["CreepLate"]
-    + $points["Gold"]
+      5 //CreepEarly Weight
+    + 3 //CreepMid Weight
+    + 2 //CreepLate Weight
+    + 3 //Gold Weight
+    + 10 * $LC //nMatchesWon Weight
+    + $RCKda * $LC //KDA Weight
+    + 9 * $LC //Pentakill Weight
+    + 7 * $LC //Quadrakill Weight
+    + 5 * $LC //Triplekill Weight
+    + 3 * $LC //Doublekill Weight
+    + 8 * $LC //KillingSpree Weight
+    + $RCDamageDealt //DamageDealt Weight
+    + $RCDamageTaken //DamageTaken Weight
+    + $RCWardsPlaced //WardsPlaced Weight
+    + $RCNeutralCreeps //NeutralCreeps Weight
+    + 5 //MasteryLevel Weight
   );
 
   //Rounding result

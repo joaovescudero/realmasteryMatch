@@ -11,7 +11,8 @@ $(document).ready(function(){
 	var p0 = [];
 	var p1 = [];
 	var stats = ["KDA", "Gold", "WardsPlaced", "KillingSpree", "DoubleKill", "TripleKill", "QuadraKill", "PentaKill", "CreepEarly", "CreepMid", "CreepLate", "NeutralCreeps", "TotalDamageDealt", "TotalDamageTaken", "nMatchesWon", "MasteryLevel", "league"];
-	
+	var apiUrl = 'https://joaovescudero.me/riot/api/';
+
 	/* Hide things at start */
 	$('#results-table').hide();
 	$('#loading').hide();
@@ -107,18 +108,23 @@ $(document).ready(function(){
 			match.user[0] + ' [' + match.region[0].toUpperCase() + '] ' + match.championName[0] + ' vs ' +
 			match.user[1] + ' [' + match.region[1].toUpperCase() + '] ' + match.championName[1]
 		);
+		for(var i=0; i < 2; i++){
+			$('.player-info.p'+i).text(
+				match.user[i] + ' [' + match.region[i].toUpperCase() + '] ' + match.championName[i]
+			);
+		}
 
 		/* Sets the website hash so that users can share the match */
 		window.location.hash = match.region[0] + '-' + match.user[0].replace(' ', '') + '-' + match.champion[0] + '!vs!' + match.region[1] + '-' + match.user[1].replace(' ', '') + '-' + match.champion[1];
 
 		/* Add the facebook Share+Like button so that users can share/like the match */
-		$('#nav-p').html('<div class="fb-like" data-href="' + window.location.href + window.location.hash + '" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>');
-				
+		$('#nav-p').html('<div class="fb-like" data-href="' + window.location.href + '" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>');
+
 
 		for(var i=0; i<2; i++){ /* 1 request for player */
 			$.ajax({
 			  type: 'GET',
-			  url: 'https://joaovescudero.me/riot/api/?region='+match.region[i]+'&username='+match.user[i]+'&champid='+match.champion[i],
+			  url: apiUrl+'?region='+match.region[i]+'&username='+match.user[i]+'&champid='+match.champion[i],
 			  contentType: 'text/plain',
 
 			  xhrFields: {
@@ -139,14 +145,14 @@ $(document).ready(function(){
 
 			  	/* Check if both players results is already loaded */
 			  	if(match.results[0] && match.results[1]){
-					
-					/* Hide the loading gif */
-					$('#loading').hide(300);
-					
-					/* Shows the match results table */
-					$('#results-table').show(400);
 
-					/* Round stats of a summoner in 2 decimal places */
+						/* Hide the loading gif */
+						$('#loading').hide(300);
+
+						/* Shows the match results table */
+						$('#results-table').show(400);
+
+						/* Round stats of a summoner in 2 decimal places */
 				  	for(var i = 0; i < 2; i++){
 					  	$('.player-data.p'+i).each(function(){
 					  		var stat = $(this).data('data');
@@ -155,7 +161,7 @@ $(document).ready(function(){
 					  			p0.push(round(match.results[i].stats[stat], 2));
 					  		}else{
 					  			p1.push(round(match.results[i].stats[stat], 2));
-					  		}	
+					  		}
 					  	});
 				  	}
 
@@ -197,7 +203,6 @@ $(document).ready(function(){
 			  		/* Transform the win rate in percentage */
 			  		$('.player-data.p0.nmatcheswon').text(p0[14]*10+'%');
 			  		$('.player-data.p1.nmatcheswon').text(p1[14]*10+'%');
-
 			  	}
 			  },
 
@@ -246,7 +251,7 @@ $(document).ready(function(){
 		$('#nav-p').text('Select the summoner and the champion');
 	}
 
-	/* Check if the user is coming from a direct link with hash */ 
+	/* Check if the user is coming from a direct link with hash */
 	if(window.location.hash && window.location.hash != '#'){
 
 		/* Splits the hash, remove spaces, # and !vs! */

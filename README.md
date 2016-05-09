@@ -34,13 +34,12 @@ This project uses the RIOT API to get data of a player's last 5 ranked matches w
 
 
 ##<a name="rmindex"></a> RealMastery Index
-We created RealMastery: a Player Efficiency Rating for League of Legends based on the last 5 ranked games of a summoner with a specific champion.
-This project uses the RIOT API to get the data from these matches and calculate a Player Efficiency Rating by a weighted average:
+RealMastery is a Player Efficiency Rating for League of Legends based on the last 5 ranked games of a summoner with a specific champion and it's calculated by a weighted average:
 
 ```javascript
 (((CreepEarly * 5) + (CreepMid * 3) + (CreepLate * 2) + (Gold * 3) + (nMatchesWon * 10) * LC) + (((Kills+Assists)/Deaths) * 9) * LC) + ((PentaKills * 9) * LC) + ((QuadraKills * 7) * LC) + ((TripleKills * 5) * LC) + ((DoubleKills * 3) * LC) + ((MaxKillingSpree * 8) * LC) + ((TotalDamageDealt * RC) * LC) + ((TotalDamageTaken * RC) * LC) + (WardsPlaced * RC) + (NeutralCreeps * RC) + (MasteryLevel * 5) )
 /
-(CreepEarly + CreepMid + CreepLate + Gold + nMatchesWon + ((Kills+Assists)/Deaths)) + PentaKills + QuadraKills + TripleKills + DoubleKills + MaxKillingSpree + TotalDamageDealt + TotalDamageTaken + WardsPlaced + NeutralCreeps + MasteryLevel)))
+(5 + 3 + 2 + 3 + (10 * LC) + (9 * LC) + (9 * LC) + (7 * LC) + (5 * LC) + (3 * LC) + (8 * LC) + 3 + 3 + 3 + 3 + 5)
 * (1 - (1/nMatches)) * 100
 ```
 
@@ -48,9 +47,9 @@ This project uses the RIOT API to get the data from these matches and calculate 
 - CreepEarly: Creeps per minute (0 to 10 minutes) ~ Weight: 5
 - CreepMid: Creeps per minute (10 to 20 minutes) ~ Weight: 3
 - CreepLate: Creeps per minute (20 minutes until end) ~ Weight: 2
-- Gold: (Total of gold earned/1000) ~ Weight: 3 
+- Gold: (Total of gold earned/1000) ~ Weight: 3
 - nMatchesWon: (nMatchesWon / nMatches) * 10 ~ Weight: 10
-- KDA Ratio: (Kills+Assists)/Deaths ~ Weight: 9
+- KDA Ratio: (Kills+Assists)/Deaths ~ Weight: Variable (Default: 9)
 - PentaKills ~ Weight: 9
 - QuadraKills ~ Weight: 7
 - TripleKills ~ Weight: 5
@@ -70,9 +69,10 @@ This project uses the RIOT API to get the data from these matches and calculate 
   - Master: 1.55;
   - Challenger: 1.6
 - RC: Role Coefficient.
-  - For mid laners and adcarries, TotalDamageDealt has a RC of 7;
-  - For top laners, TotalDamageDealt has a RC of 7 and a TotalDamageTaken of 9;
-  - For junglers, NeutralCreeps has a RC of 7;
+  - For mid laners and ad carries, TotalDamageDealt has a RC of 7 and KDA has a RC of 10
+  - For top laners, TotalDamageDealt has a RC of 5 and TotalDamageTaken has a RC of 6;
+  - For junglers and supports assists are multiplied by 1.5;
+  - FOr junglers, NeutralCreeps has a RC of 4.5;
   - For supports, WardsPlaced has a RC of 5;
   - Default RC value is 3
 
@@ -80,10 +80,12 @@ This project uses the RIOT API to get the data from these matches and calculate 
 Creeps weight are based on the importance and difficulty of the gold in its time, assuming that in the first 10 minutes of game the gold can do more advantage than later, thus, skills are less powerfull, causing farm to be harder.
 
 ####League coefficient
-Datas are different from league to league, in high elos is more difficult to get high numbers than lowers elos. We did League Coefficients to solve this problem by fixed values that are applied just in some stats: nMatchesWon, KDA ratio, all multikills, maxKillingSpree, and the damage ones, so creeps and other stats dont differ. This can do great difference on the final result and it's more fair. 
+Datas are different from league to league, in high elos is more difficult to get high numbers than lowers elos. We did League Coefficients to solve this problem by fixed values that are applied just in some stats: nMatchesWon, KDA ratio, all multikills and maxKillingSpree, so creeps and other stats dont differ. This can do great difference on the final result and it's more fair.
 
 ####Role coefficient
 Each role have its main characteristics. Comparing different players in different roles and with different champions is something very hard and cause a lot of discussions. Since the RIOT API provides datas about which role the summoner played in a specific game, we use this data to balance all those differences: wardsPlaced is valuable for support, so does totalDamageDealt for mid laners, top laners and adcarries, also neutralCreeps for junglers (they dont have high creep stats).
+
+####Future work: Role coefficient can be use to reduce grades if the stats are too low, or can elevate if they're too high.
 
 ##<a name="stack"></a>Technology Stack
 ###API Processor

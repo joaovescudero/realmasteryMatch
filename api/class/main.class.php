@@ -56,12 +56,12 @@
       //Connection
       $bridge = file_get_contents($this->GLOBALURL);
       //Decode json
+      $bridge = strtolower($bridge);
       $json = json_decode($bridge, true);
       //Verify if champKey exist
-      if($json["data"][$champKey]["id"] == ""){$message['message'] = 'Champion key not found'; exit(json_encode($message));}
+      if($json["data"][strtolower($champKey)]["id"] == ""){$message['message'] = 'Champion key not found'; exit(json_encode($message));}
       //Returning champId
-      return $json["data"][$champKey]["id"];
-      
+      return $json["data"][strtolower($champKey)]["id"];
     }
 
     /**
@@ -233,4 +233,3 @@
       return json_decode($bridge, true);
     }
   }
-  
