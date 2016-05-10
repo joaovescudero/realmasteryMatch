@@ -162,7 +162,7 @@
      */
     public function getPlayerMastery($userId, $champId){
       //Verifying region
-      if($this->REGION == "br" || $this->REGION == "euw"){$region=$this->REGION."1";}elseif($this->REGION == "eune"){$region="eun1";}else{$region=$this->REGION;}
+      if($this->REGION == "br" || $this->REGION == "euw" || $this->REGION == "jp" || $this->REGION == "na" || $this->REGION == "tr"){$region=$this->REGION."1";}elseif($this->REGION == "eune"){$region="eun1";}elseif($this->REGION == 'oce'){$region="oc1";}elseif($this->REGION == 'lan'){$region="la1";}elseif($this->REGION == 'las'){$region="la1";}else{$region=$this->REGION;}
       //Creating an Url
       $url = $this->BASEURL.
              "/championmastery/location/".
