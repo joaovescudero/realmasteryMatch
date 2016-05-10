@@ -72,7 +72,7 @@ RealMastery is a Player Efficiency Rating for League of Legends based on the las
   - For mid laners and ad carries, TotalDamageDealt has a RC of 7 and KDA has a RC of 10
   - For top laners, TotalDamageDealt has a RC of 5 and TotalDamageTaken has a RC of 6;
   - For junglers and supports assists are multiplied by 1.5;
-  - FOr junglers, NeutralCreeps has a RC of 4.5;
+  - For junglers, NeutralCreeps has a RC of 4.5;
   - For supports, WardsPlaced has a RC of 5 and TotalDamageTaken has a RC of 5;
   - Default RC value is 3
 
